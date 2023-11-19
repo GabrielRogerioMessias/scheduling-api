@@ -9,11 +9,14 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 @Data
-public class SchedulingEmployerPK {
+public class SchedulingEmployerPK implements Serializable {
+
+
     @ManyToOne
     @JoinColumn(name = "id_Scheduling")
     private Scheduling scheduling;
