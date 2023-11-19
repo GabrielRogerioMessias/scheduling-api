@@ -6,8 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Data
+
 @Entity
+@Data
 public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

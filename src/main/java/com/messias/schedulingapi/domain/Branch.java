@@ -6,8 +6,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

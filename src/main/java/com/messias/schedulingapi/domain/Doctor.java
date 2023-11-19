@@ -7,8 +7,9 @@ import lombok.Generated;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

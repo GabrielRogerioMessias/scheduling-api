@@ -6,9 +6,10 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @Entity
 @Table(name = "tb_User")
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +20,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Scheduling> schedulingList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<SchedulingEmployer> schedulingEmployerList = new ArrayList<>();
 
 }

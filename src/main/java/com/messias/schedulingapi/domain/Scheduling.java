@@ -6,8 +6,9 @@ import lombok.Data;
 import javax.print.Doc;
 import java.time.LocalDateTime;
 
-@Data
+
 @Entity
+@Data
 public class Scheduling {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
