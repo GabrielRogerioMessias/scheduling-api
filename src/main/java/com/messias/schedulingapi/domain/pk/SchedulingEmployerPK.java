@@ -15,14 +15,12 @@ import java.util.Objects;
 @Embeddable
 public class SchedulingEmployerPK implements Serializable {
 
-
     @ManyToOne
     @JoinColumn(name = "id_Scheduling")
     private Scheduling scheduling;
     @ManyToOne
     @JoinColumn(name = "id_employer")
     private Employer employer;
-
 
     public Scheduling getScheduling() {
         return scheduling;

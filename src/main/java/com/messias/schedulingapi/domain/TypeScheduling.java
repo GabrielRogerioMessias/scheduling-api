@@ -5,9 +5,9 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
 public class TypeScheduling {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +17,48 @@ public class TypeScheduling {
     @OneToMany(mappedBy = "typeScheduling")
     private List<SchedulingEmployer> schedulingEmployers = new ArrayList<SchedulingEmployer>();
 
+    public TypeScheduling() {
+    }
 
+    public TypeScheduling(Integer idTypeScheduling, String description) {
+        this.idTypeScheduling = idTypeScheduling;
+        this.description = description;
+    }
+
+    public Integer getIdTypeScheduling() {
+        return idTypeScheduling;
+    }
+
+    public void setIdTypeScheduling(Integer idTypeScheduling) {
+        this.idTypeScheduling = idTypeScheduling;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<SchedulingEmployer> getSchedulingEmployers() {
+        return schedulingEmployers;
+    }
+
+    public void setSchedulingEmployers(List<SchedulingEmployer> schedulingEmployers) {
+        this.schedulingEmployers = schedulingEmployers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeScheduling that = (TypeScheduling) o;
+        return Objects.equals(idTypeScheduling, that.idTypeScheduling);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idTypeScheduling);
+    }
 }
