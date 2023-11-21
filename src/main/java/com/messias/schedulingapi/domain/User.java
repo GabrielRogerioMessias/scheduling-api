@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.domain;
 
+import com.messias.schedulingapi.domain.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +18,8 @@ public class User {
     private String name;
     private String login;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private UserRoles roles;
 
     @OneToMany(mappedBy = "user")
     private List<Scheduling> schedulingList = new ArrayList<>();
