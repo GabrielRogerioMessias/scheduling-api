@@ -1,13 +1,15 @@
 package com.messias.schedulingapi.services;
 
+import com.messias.schedulingapi.controllers.EmployerController;
 import com.messias.schedulingapi.repositories.DoctorRepository;
+import com.messias.schedulingapi.repositories.EmployerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployerService {
-    private final EmployerService employerService;
+    private EmployerRepository employerRepository;
 
-    public EmployerService(EmployerService employerService) {
-        this.employerService = employerService;
+    public EmployerService(EmployerRepository employerRepository) {
+        this.employerRepository = employerRepository;
     }
 }
