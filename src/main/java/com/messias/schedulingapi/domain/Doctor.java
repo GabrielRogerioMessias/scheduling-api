@@ -1,8 +1,7 @@
 package com.messias.schedulingapi.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Generated;
+
 
 import java.util.ArrayList;
 import java.util.List;

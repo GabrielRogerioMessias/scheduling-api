@@ -2,7 +2,7 @@ package com.messias.schedulingapi.domain;
 
 import com.messias.schedulingapi.domain.enums.UserRoles;
 import jakarta.persistence.*;
-import lombok.Data;
+
 
 import java.util.ArrayList;
 import java.util.List;

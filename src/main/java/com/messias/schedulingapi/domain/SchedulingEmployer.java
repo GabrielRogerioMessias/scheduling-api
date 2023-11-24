@@ -2,7 +2,7 @@ package com.messias.schedulingapi.domain;
 
 import com.messias.schedulingapi.domain.pk.SchedulingEmployerPK;
 import jakarta.persistence.*;
-import lombok.Data;
+
 
 import java.time.LocalTime;
 import java.util.Objects;
