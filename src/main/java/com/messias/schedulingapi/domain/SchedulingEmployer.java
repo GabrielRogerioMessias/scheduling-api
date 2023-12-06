@@ -13,7 +13,7 @@ import java.util.Objects;
 public class SchedulingEmployer {
     @EmbeddedId
     private SchedulingEmployerPK idSchedulingEmployer;
-    private LocalTime hour;
+    private LocalTime serviceTime;
     private boolean presence;
 
     @ManyToOne
@@ -28,7 +28,7 @@ public class SchedulingEmployer {
     }
 
     public SchedulingEmployer(LocalTime hour, boolean presence) {
-        this.hour = hour;
+        this.serviceTime = hour;
         this.presence = presence;
     }
 
@@ -49,12 +49,12 @@ public class SchedulingEmployer {
     }
 
 
-    public LocalTime getHour() {
-        return hour;
+    public LocalTime getServiceTime() {
+        return serviceTime;
     }
 
-    public void setHour(LocalTime hour) {
-        this.hour = hour;
+    public void setServiceTime(LocalTime hour) {
+        this.serviceTime = hour;
     }
 
     public boolean isPresence() {

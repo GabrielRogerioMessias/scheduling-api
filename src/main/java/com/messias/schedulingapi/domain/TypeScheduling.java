@@ -15,7 +15,7 @@ public class TypeScheduling {
     private String description;
 
     @OneToMany(mappedBy = "typeScheduling")
-    private List<SchedulingEmployer> schedulingEmployers = new ArrayList<SchedulingEmployer>();
+    private List<SchedulingEmployer> schedulingEmployers = new ArrayList<>();
 
     public TypeScheduling() {
     }

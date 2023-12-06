@@ -3,7 +3,7 @@ package com.messias.schedulingapi.domain;
 import com.messias.schedulingapi.domain.pk.SchedulingEmployerPK;
 import jakarta.persistence.*;
 
-import javax.print.Doc;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,9 @@ public class Scheduling {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDateTime dateScheduling;
+    private LocalDate dateScheduling;
+    private LocalDateTime startOfService;
+    private LocalDateTime endOfService;
 
     @ManyToOne
     @JoinColumn(name = "idDoctor")
@@ -35,11 +37,11 @@ public class Scheduling {
     public Scheduling() {
     }
 
-    public Scheduling(Integer id, LocalDateTime dateScheduling, Doctor doctor, Branch branch) {
+    public Scheduling(Integer id, LocalDate dateScheduling, LocalDateTime startOfService, LocalDateTime endOfService) {
         this.id = id;
         this.dateScheduling = dateScheduling;
-        this.doctor = doctor;
-        this.branch = branch;
+        this.startOfService = startOfService;
+        this.endOfService = endOfService;
     }
 
     public Integer getId() {
@@ -50,12 +52,28 @@ public class Scheduling {
         this.id = id;
     }
 
-    public LocalDateTime getDateScheduling() {
+    public LocalDate getDateScheduling() {
         return dateScheduling;
     }
 
-    public void setDateScheduling(LocalDateTime dateScheduling) {
+    public void setDateScheduling(LocalDate dateScheduling) {
         this.dateScheduling = dateScheduling;
+    }
+
+    public LocalDateTime getStartOfService() {
+        return startOfService;
+    }
+
+    public void setStartOfService(LocalDateTime startOfService) {
+        this.startOfService = startOfService;
+    }
+
+    public LocalDateTime getEndOfService() {
+        return endOfService;
+    }
+
+    public void setEndOfService(LocalDateTime endOfService) {
+        this.endOfService = endOfService;
     }
 
     public Doctor getDoctor() {
@@ -80,10 +98,6 @@ public class Scheduling {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<SchedulingEmployer> getSchedulingEmployerList() {
-        return schedulingEmployerList;
     }
 
     public void setSchedulingEmployerList(List<SchedulingEmployer> schedulingEmployerList) {
