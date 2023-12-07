@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -17,6 +18,7 @@ public class Branch {
     private String city;
 
     @OneToMany(mappedBy = "branch")
+    @JsonIgnore
     private List<Scheduling> schedulingList = new ArrayList<>();
 
     public Branch() {
