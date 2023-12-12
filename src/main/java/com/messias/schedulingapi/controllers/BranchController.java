@@ -3,6 +3,8 @@ package com.messias.schedulingapi.controllers;
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.services.BranchService;
 import com.messias.schedulingapi.services.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,10 +28,28 @@ public class BranchController {
         return ResponseEntity.ok().body(branchList);
     }
 
+    @DeleteMapping(value = "{idBranch}")
+    public ResponseEntity<Void> delete(@PathVariable Integer idBranch) {
+        branchService.delete(idBranch);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "{idBranch}")
+    public ResponseEntity<Branch> findById(@PathVariable Integer idBranch) {
+        Branch branchResult = branchService.findById(idBranch);
+        return ResponseEntity.ok().body(branchResult);
+    }
+
     @PostMapping
     public ResponseEntity<Branch> insert(@RequestBody Branch newBranch) {
         Branch branch = branchService.insert(newBranch);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(branch.getId()).toUri();
         return ResponseEntity.created(uri).body(branch);
+    }
+
+    @PutMapping("{idBranch}")
+    public ResponseEntity<Branch> update(@PathVariable Integer idBranch, @RequestBody Branch updateBranch) {
+        branchService.update(idBranch, updateBranch);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
