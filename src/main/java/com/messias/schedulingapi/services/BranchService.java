@@ -2,6 +2,7 @@ package com.messias.schedulingapi.services;
 
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.repositories.BranchRepository;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import jakarta.servlet.http.PushBuilder;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,14 @@ public class BranchService {
     }
 
     public Branch findById(Integer idBranch) {
-        //[exception id not found]
-        Optional<Branch> branchOptional = branchRepository.findById(idBranch);
-        return branchOptional.get();
+        Branch branch = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(idBranch));
+        return branch;
     }
 
     public void delete(Integer idBranch) {
         //[exception id not found]
-        Optional<Branch> branchOptional = branchRepository.findById(idBranch);
-        branchRepository.delete(branchOptional.get());
+        Branch branch = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(idBranch));
+        branchRepository.delete(branch);
     }
 
     public Branch insert(Branch branch) {
