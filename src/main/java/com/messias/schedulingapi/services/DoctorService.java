@@ -16,7 +16,6 @@ public class DoctorService {
     }
 
     public void delete(Integer idDoctor) {
-        // exception cascate
         Doctor doctor = doctorRepository.findById(idDoctor).orElseThrow(() -> new ResourceNotFoundException(idDoctor));
         doctorRepository.delete(doctor);
     }
