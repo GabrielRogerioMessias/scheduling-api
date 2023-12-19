@@ -37,16 +37,15 @@ public class BranchService {
         return branchRepository.save(branch);
     }
 
-    public Branch update(Integer idBranch, Branch newBranch) {
-        Optional<Branch> branchOptional = branchRepository.findById(idBranch);
-        Branch branchOld = branchOptional.get();
-        this.updateDate(branchOld, newBranch);
+    public Branch update(Integer idBranch, Branch updateBranch) {
+        Branch branchOld = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(idBranch));
+        this.updateDate(branchOld, updateBranch);
         return branchRepository.save(branchOld);
     }
 
-    public void updateDate(Branch oldBranch, Branch newBranch) {
-        oldBranch.setNameBranch(newBranch.getNameBranch());
-        oldBranch.setCity(newBranch.getCity());
+    public void updateDate(Branch oldBranch, Branch updateBranch) {
+        oldBranch.setNameBranch(updateBranch.getNameBranch());
+        oldBranch.setCity(updateBranch.getCity());
     }
 
 }
