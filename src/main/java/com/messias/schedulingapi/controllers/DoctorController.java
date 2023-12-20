@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = "/doctors")
 public class DoctorController {
 
-    private DoctorService doctorService;
+    private final DoctorService doctorService;
 
     public DoctorController(DoctorService doctorService) {
         this.doctorService = doctorService;

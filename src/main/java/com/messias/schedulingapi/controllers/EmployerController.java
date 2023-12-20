@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/employers")
 public class EmployerController {
 
-    private EmployerService employerService;
+    private final EmployerService employerService;
 
     public EmployerController(EmployerService employerService) {
         this.employerService = employerService;

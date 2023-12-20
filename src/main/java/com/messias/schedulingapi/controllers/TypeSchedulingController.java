@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/type-schedulings")
 public class TypeSchedulingController {
 
-    private TypeSchedulingService typeSchedulingService;
+    private final TypeSchedulingService typeSchedulingService;
 
     public TypeSchedulingController(TypeSchedulingService typeSchedulingService) {
         this.typeSchedulingService = typeSchedulingService;

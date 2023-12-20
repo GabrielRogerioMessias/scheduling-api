@@ -16,14 +16,14 @@ import java.util.List;
 @RequestMapping(value = "/branchs")
 public class BranchController {
 
-    private BranchService branchService;
+    private final BranchService branchService;
 
     public BranchController(BranchService branchService) {
         this.branchService = branchService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Branch>> listAllBranches() {
+    public ResponseEntity<List<Branch>> findAll() {
         List<Branch> branchList = branchService.findAll();
         return ResponseEntity.ok().body(branchList);
     }
