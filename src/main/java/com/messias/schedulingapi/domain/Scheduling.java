@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.messias.schedulingapi.domain.pk.SchedulingEmployerPK;
 import jakarta.persistence.*;
 
