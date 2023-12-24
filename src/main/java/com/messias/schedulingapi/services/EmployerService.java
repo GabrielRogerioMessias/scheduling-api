@@ -5,7 +5,9 @@ import com.messias.schedulingapi.domain.Doctor;
 import com.messias.schedulingapi.domain.Employer;
 import com.messias.schedulingapi.repositories.DoctorRepository;
 import com.messias.schedulingapi.repositories.EmployerRepository;
+import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +22,11 @@ public class EmployerService {
 
     public void delete(Integer idEmployer) {
         Employer employer = employerRepository.findById(idEmployer).orElseThrow(() -> new ResourceNotFoundException(Employer.class, idEmployer));
-        employerRepository.delete(employer);
+        try {
+            employerRepository.delete(employer);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public List<Employer> findAll() {
