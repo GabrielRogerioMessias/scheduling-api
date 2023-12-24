@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -14,7 +15,8 @@ public class Employer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(mappedBy = "idSchedulingEmployer.employer")
+    @JsonIgnore
+    @OneToMany(mappedBy = "employer")
     private List<SchedulingEmployer> schedulingEmployerList = new ArrayList<>();
 
     public Employer() {

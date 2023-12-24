@@ -16,7 +16,7 @@ public class DoctorService {
     }
 
     public void delete(Integer idDoctor) {
-        Doctor doctor = doctorRepository.findById(idDoctor).orElseThrow(() -> new ResourceNotFoundException(idDoctor));
+        Doctor doctor = doctorRepository.findById(idDoctor).orElseThrow(() -> new ResourceNotFoundException(Doctor.class, idDoctor));
         doctorRepository.delete(doctor);
     }
 
@@ -26,7 +26,7 @@ public class DoctorService {
     }
 
     public Doctor findById(Integer idDoctor) {
-        Doctor doctor = doctorRepository.findById(idDoctor).orElseThrow(() -> new ResourceNotFoundException(idDoctor));
+        Doctor doctor = doctorRepository.findById(idDoctor).orElseThrow(() -> new ResourceNotFoundException(Doctor.class, idDoctor));
         return doctor;
     }
 
@@ -36,7 +36,7 @@ public class DoctorService {
 
 
     public Doctor update(Integer idDoctor, Doctor updateDoctor) {
-        Doctor oldDoctor = doctorRepository.findById(idDoctor).orElseThrow(() -> new ResourceNotFoundException(idDoctor));
+        Doctor oldDoctor = doctorRepository.findById(idDoctor).orElseThrow(() -> new ResourceNotFoundException(Doctor.class, idDoctor));
         updateData(oldDoctor, updateDoctor);
         return doctorRepository.save(oldDoctor);
     }

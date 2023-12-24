@@ -3,11 +3,9 @@ package com.messias.schedulingapi.services;
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.repositories.BranchRepository;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
-import jakarta.servlet.http.PushBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BranchService {
@@ -23,13 +21,13 @@ public class BranchService {
     }
 
     public Branch findById(Integer idBranch) {
-        Branch branch = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(idBranch));
+        Branch branch = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(Branch.class, idBranch));
         return branch;
     }
 
     public void delete(Integer idBranch) {
         //[exception id not found]
-        Branch branch = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(idBranch));
+        Branch branch = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(Branch.class, idBranch));
         branchRepository.delete(branch);
     }
 
@@ -38,7 +36,7 @@ public class BranchService {
     }
 
     public Branch update(Integer idBranch, Branch updateBranch) {
-        Branch branchOld = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(idBranch));
+        Branch branchOld = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(Branch.class, idBranch));
         this.updateDate(branchOld, updateBranch);
         return branchRepository.save(branchOld);
     }

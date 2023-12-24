@@ -21,11 +21,11 @@ public class UserService {
     }
 
     public User findById(Integer idUser) {
-        return userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(idUser));
+        return userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(User.class, idUser));
     }
 
     public void delete(Integer idUser) {
-        User user = userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(idUser));
+        User user = userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(User.class, idUser));
         userRepository.delete(user);
     }
 
@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public User update(Integer idUser, User updateUser) {
-        User oldUser = userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(idUser));
+        User oldUser = userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(User.class, idUser));
         this.updateDate(oldUser, updateUser);
         return userRepository.save(oldUser);
     }

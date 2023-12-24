@@ -19,7 +19,7 @@ public class EmployerService {
     }
 
     public void delete(Integer idEmployer) {
-        Employer employer = employerRepository.findById(idEmployer).orElseThrow(() -> new ResourceNotFoundException(idEmployer));
+        Employer employer = employerRepository.findById(idEmployer).orElseThrow(() -> new ResourceNotFoundException(Employer.class, idEmployer));
         employerRepository.delete(employer);
     }
 
@@ -29,7 +29,7 @@ public class EmployerService {
     }
 
     public Employer findById(Integer idEmployer) {
-        return employerRepository.findById(idEmployer).orElseThrow(() -> new ResourceNotFoundException(idEmployer));
+        return employerRepository.findById(idEmployer).orElseThrow(() -> new ResourceNotFoundException(Employer.class, idEmployer));
     }
 
     public Employer insert(Employer newEmployer) {
@@ -38,7 +38,7 @@ public class EmployerService {
 
 
     public Employer update(Integer idEmployer, Employer updateEmployer) {
-        Employer oldEmployer = employerRepository.findById(idEmployer).orElseThrow(() -> new ResourceNotFoundException(idEmployer));
+        Employer oldEmployer = employerRepository.findById(idEmployer).orElseThrow(() -> new ResourceNotFoundException(Employer.class, idEmployer));
         updateData(oldEmployer, updateEmployer);
         return employerRepository.save(oldEmployer);
     }

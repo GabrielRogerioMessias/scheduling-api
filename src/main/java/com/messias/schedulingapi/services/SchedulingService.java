@@ -27,7 +27,7 @@ public class SchedulingService {
     }
 
     public void delete(Integer idScheduling) {
-        Scheduling scheduling = schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(idScheduling));
+        Scheduling scheduling = schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(Scheduling.class, idScheduling));
         schedulingRepository.delete(scheduling);
     }
 
@@ -36,7 +36,7 @@ public class SchedulingService {
     }
 
     public Scheduling findById(Integer idScheduling) {
-        return schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(idScheduling));
+        return schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(Scheduling.class, idScheduling));
     }
 
     public Scheduling insert(Scheduling newScheduling) {
@@ -53,7 +53,7 @@ public class SchedulingService {
     }
 
     public Scheduling update(Integer idScheduling, Scheduling updateScheduling) {
-        Scheduling oldScheduling = schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(idScheduling));
+        Scheduling oldScheduling = schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(Scheduling.class, idScheduling));
         updateData(oldScheduling, updateScheduling);
         return schedulingRepository.save(oldScheduling);
     }

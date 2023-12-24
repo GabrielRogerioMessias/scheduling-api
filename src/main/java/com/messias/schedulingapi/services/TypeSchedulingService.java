@@ -19,7 +19,7 @@ public class TypeSchedulingService {
 
 
     public void delete(Integer idTypeScheduling) {
-        TypeScheduling employer = typeSchedulingRepository.findById(idTypeScheduling).orElseThrow(() -> new ResourceNotFoundException(idTypeScheduling));
+        TypeScheduling employer = typeSchedulingRepository.findById(idTypeScheduling).orElseThrow(() -> new ResourceNotFoundException(TypeScheduling.class, idTypeScheduling));
         typeSchedulingRepository.delete(employer);
     }
 
@@ -29,7 +29,7 @@ public class TypeSchedulingService {
     }
 
     public TypeScheduling findById(Integer idTypeScheduling) {
-        return typeSchedulingRepository.findById(idTypeScheduling).orElseThrow(() -> new ResourceNotFoundException(idTypeScheduling));
+        return typeSchedulingRepository.findById(idTypeScheduling).orElseThrow(() -> new ResourceNotFoundException(TypeScheduling.class, idTypeScheduling));
     }
 
     public TypeScheduling insert(TypeScheduling newTypeScheduling) {
@@ -38,7 +38,7 @@ public class TypeSchedulingService {
 
 
     public TypeScheduling update(Integer idTypeScheduling, TypeScheduling updateTypeScheduling) {
-        TypeScheduling oldTypeScheduling = typeSchedulingRepository.findById(idTypeScheduling).orElseThrow(() -> new ResourceNotFoundException(idTypeScheduling));
+        TypeScheduling oldTypeScheduling = typeSchedulingRepository.findById(idTypeScheduling).orElseThrow(() -> new ResourceNotFoundException(TypeScheduling.class, idTypeScheduling));
         updateData(oldTypeScheduling, updateTypeScheduling);
         return typeSchedulingRepository.save(oldTypeScheduling);
     }

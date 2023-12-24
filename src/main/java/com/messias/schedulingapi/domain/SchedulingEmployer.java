@@ -1,6 +1,7 @@
 package com.messias.schedulingapi.domain;
 
-import com.messias.schedulingapi.domain.pk.SchedulingEmployerPK;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -11,9 +12,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "scheduling_employer")
 public class SchedulingEmployer {
-    @EmbeddedId
-    private SchedulingEmployerPK idSchedulingEmployer;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private LocalTime serviceTime;
+
     private boolean presence;
 
     @ManyToOne
@@ -23,38 +26,45 @@ public class SchedulingEmployer {
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "id_employer")
+    private Employer employer;
+
+    @ManyToOne
+    @JoinColumn(name = "id_scheduling")
+    private Scheduling scheduling;
 
     public SchedulingEmployer() {
     }
 
-    public SchedulingEmployer(LocalTime hour, boolean presence) {
-        this.serviceTime = hour;
+    public SchedulingEmployer(Integer id, LocalTime serviceTime, boolean presence) {
+        this.id = id;
+        this.serviceTime = serviceTime;
         this.presence = presence;
     }
 
-    public Employer getEmployer() {
-        return idSchedulingEmployer.getEmployer();
+    public User getUser() {
+        return user;
     }
 
-    public void setEmployer(Employer employer) {
-        this.idSchedulingEmployer.setEmployer(employer);
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Scheduling getScheduling() {
-        return idSchedulingEmployer.getScheduling();
+    public Integer getId() {
+        return id;
     }
 
-    public void setScheduling(Scheduling scheduling) {
-        this.idSchedulingEmployer.setScheduling(scheduling);
+    public void setId(Integer id) {
+        this.id = id;
     }
-
 
     public LocalTime getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(LocalTime hour) {
-        this.serviceTime = hour;
+    public void setServiceTime(LocalTime serviceTime) {
+        this.serviceTime = serviceTime;
     }
 
     public boolean isPresence() {
@@ -73,24 +83,34 @@ public class SchedulingEmployer {
         this.typeScheduling = typeScheduling;
     }
 
-    public User getUser() {
-        return user;
+    public Employer getEmployer() {
+        return employer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
+
+    public Scheduling getScheduling() {
+        return scheduling;
+    }
+
+    public void setScheduling(Scheduling scheduling) {
+        this.scheduling = scheduling;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SchedulingEmployer that = (SchedulingEmployer) o;
-        return Objects.equals(idSchedulingEmployer, that.idSchedulingEmployer);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idSchedulingEmployer);
+        return Objects.hash(id);
     }
 }

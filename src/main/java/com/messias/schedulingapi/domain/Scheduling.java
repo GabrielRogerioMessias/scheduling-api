@@ -1,7 +1,7 @@
 package com.messias.schedulingapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.messias.schedulingapi.domain.pk.SchedulingEmployerPK;
+
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -31,8 +31,8 @@ public class Scheduling {
     @ManyToOne
     @JoinColumn(name = "idUser")
     private User user;
-
-    @OneToMany(mappedBy = "idSchedulingEmployer.scheduling")
+    @JsonIgnore
+    @OneToMany(mappedBy = "scheduling")
     private List<SchedulingEmployer> schedulingEmployerList = new ArrayList<>();
 
     public Scheduling() {
@@ -103,6 +103,10 @@ public class Scheduling {
 
     public void setSchedulingEmployerList(List<SchedulingEmployer> schedulingEmployerList) {
         this.schedulingEmployerList = schedulingEmployerList;
+    }
+
+    public List<SchedulingEmployer> getSchedulingEmployerList() {
+        return schedulingEmployerList;
     }
 
     @Override
