@@ -16,7 +16,6 @@ public class SchedulingInfoService {
     public SchedulingInfoService(SchedulingInfoRepository branchRepository) {
         this.schedulingInfoRepository = branchRepository;
     }
-    //  insert,
 
     public List<SchedulingInfo> findAll() {
         return schedulingInfoRepository.findAll();
@@ -28,16 +27,16 @@ public class SchedulingInfoService {
     }
 
     public void delete(Integer idSchedulingInfo) {
-        SchedulingInfo branch = schedulingInfoRepository.findById(idSchedulingInfo).orElseThrow(() -> new ResourceNotFoundException(SchedulingInfo.class, idSchedulingInfo));
+        SchedulingInfo schedulingInfo = schedulingInfoRepository.findById(idSchedulingInfo).orElseThrow(() -> new ResourceNotFoundException(SchedulingInfo.class, idSchedulingInfo));
         try {
-            schedulingInfoRepository.delete(branch);
+            schedulingInfoRepository.delete(schedulingInfo);
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
 
-    public SchedulingInfo insert(SchedulingInfo branch) {
-        return schedulingInfoRepository.save(branch);
+    public SchedulingInfo insert(SchedulingInfo schedulingInfo) {
+        return schedulingInfoRepository.save(schedulingInfo);
     }
 
     public SchedulingInfo update(Integer idSchedulingInfo, SchedulingInfo updateScheduling) {
