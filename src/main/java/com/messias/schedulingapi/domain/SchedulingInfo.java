@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class SchedulingInfo {
     private Integer id;
     private boolean hasScheduling;
     private String description;
+    @JsonIgnore
     @OneToMany(mappedBy = "schedulingInfo")
     private List<Scheduling> schedulings;
 
