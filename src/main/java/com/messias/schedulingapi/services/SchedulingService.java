@@ -46,6 +46,7 @@ public class SchedulingService {
     }
 
     public Scheduling insert(Scheduling newScheduling) {
+
         Doctor doctor = doctorService.findById(newScheduling.getDoctor().getId());
         Branch branch = branchService.findById(newScheduling.getBranch().getId());
         User user = userService.findById(newScheduling.getUser().getId());

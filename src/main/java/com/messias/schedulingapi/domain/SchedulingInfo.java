@@ -3,6 +3,7 @@ package com.messias.schedulingapi.domain;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class SchedulingInfo {
@@ -53,5 +54,18 @@ public class SchedulingInfo {
 
     public void setSchedulings(List<Scheduling> schedulings) {
         this.schedulings = schedulings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SchedulingInfo that = (SchedulingInfo) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

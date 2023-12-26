@@ -35,7 +35,7 @@ public class Scheduling {
     @OneToMany(mappedBy = "scheduling")
     private List<SchedulingEmployer> schedulingEmployerList = new ArrayList<>();
     @ManyToOne
-    @JoinColumn(name = "id_scheduling_info")
+    @JoinColumn(name = "id_scheduling_info", nullable = false)
     private SchedulingInfo schedulingInfo;
 
     public Scheduling() {
@@ -110,6 +110,14 @@ public class Scheduling {
 
     public List<SchedulingEmployer> getSchedulingEmployerList() {
         return schedulingEmployerList;
+    }
+
+    public SchedulingInfo getSchedulingInfo() {
+        return schedulingInfo;
+    }
+
+    public void setSchedulingInfo(SchedulingInfo schedulingInfo) {
+        this.schedulingInfo = schedulingInfo;
     }
 
     @Override
