@@ -6,7 +6,9 @@ import com.messias.schedulingapi.domain.Doctor;
 import com.messias.schedulingapi.domain.Scheduling;
 import com.messias.schedulingapi.domain.User;
 import com.messias.schedulingapi.repositories.SchedulingRepository;
+import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,11 @@ public class SchedulingService {
 
     public void delete(Integer idScheduling) {
         Scheduling scheduling = schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(Scheduling.class, idScheduling));
-        schedulingRepository.delete(scheduling);
+        try {
+            schedulingRepository.delete(scheduling);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public List<Scheduling> findAll() {

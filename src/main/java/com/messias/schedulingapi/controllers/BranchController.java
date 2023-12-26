@@ -3,9 +3,7 @@ package com.messias.schedulingapi.controllers;
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.services.BranchService;
 import com.messias.schedulingapi.services.UserService;
-import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import jakarta.persistence.criteria.CriteriaBuilder;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +30,7 @@ public class BranchController {
 
     @DeleteMapping(value = "{idBranch}")
     public ResponseEntity<Void> delete(@PathVariable Integer idBranch) {
-        try {
-            branchService.delete(idBranch);
-        } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException(e.getMessage());
-        }
+        branchService.delete(idBranch);
         return ResponseEntity.noContent().build();
     }
 

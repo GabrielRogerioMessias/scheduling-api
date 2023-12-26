@@ -64,6 +64,7 @@ public class SchedulingEmployerService {
         SchedulingEmployer oldSchedulingEmployer = schedulingEmployerRepository.findById(idSchedulingEmployer).orElseThrow(() -> new ResourceNotFoundException(SchedulingEmployer.class, idSchedulingEmployer));
         updateData(oldSchedulingEmployer, updateScheduling);
         return schedulingEmployerRepository.save(oldSchedulingEmployer);
+
     }
 
     public void updateData(SchedulingEmployer oldSchedulingEmployer, SchedulingEmployer updateScheduling) {
