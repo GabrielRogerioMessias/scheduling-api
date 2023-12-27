@@ -49,7 +49,6 @@ public class SchedulingEmployerService {
         Boolean verifyInfoScheduling = schedulingInfoService.checkScheduling(scheduling.getSchedulingInfo().getId());
         if (verifyInfoScheduling.equals(true)) {
             Employer employer = employerService.findById(newSchedulingEmployer.getEmployer().getId());
-
             User user = userService.findById(newSchedulingEmployer.getUser().getId());
             TypeScheduling typeScheduling = typeSchedulingService.findById(newSchedulingEmployer.getTypeScheduling().getIdTypeScheduling());
 
@@ -70,10 +69,15 @@ public class SchedulingEmployerService {
     }
 
     public SchedulingEmployer update(Integer idSchedulingEmployer, SchedulingEmployer updateScheduling) {
-        SchedulingEmployer oldSchedulingEmployer = schedulingEmployerRepository.findById(idSchedulingEmployer).orElseThrow(() -> new ResourceNotFoundException(SchedulingEmployer.class, idSchedulingEmployer));
-        updateData(oldSchedulingEmployer, updateScheduling);
-        return schedulingEmployerRepository.save(oldSchedulingEmployer);
-
+        Scheduling scheduling = schedulingService.findById(updateScheduling.getScheduling().getId());
+        Boolean verifyInfoScheduling = schedulingInfoService.checkScheduling(scheduling.getSchedulingInfo().getId());
+        if (verifyInfoScheduling.equals(true)) {
+            SchedulingEmployer oldSchedulingEmployer = schedulingEmployerRepository.findById(idSchedulingEmployer).orElseThrow(() -> new ResourceNotFoundException(SchedulingEmployer.class, idSchedulingEmployer));
+            updateData(oldSchedulingEmployer, updateScheduling);
+            return schedulingEmployerRepository.save(oldSchedulingEmployer);
+        } else {
+            throw new CannotScheduleException();
+        }
     }
 
     public void updateData(SchedulingEmployer oldSchedulingEmployer, SchedulingEmployer updateScheduling) {
