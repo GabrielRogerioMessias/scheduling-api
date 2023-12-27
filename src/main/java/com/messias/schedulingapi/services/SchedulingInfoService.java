@@ -50,4 +50,9 @@ public class SchedulingInfoService {
         oldSchedulingInfo.setHasScheduling(updateSchedulingInfo.isHasScheduling());
     }
 
+    public Boolean checkScheduling(Integer idSchedulingInfo) {
+        Boolean verify = schedulingInfoRepository.findByHasScheduling(idSchedulingInfo);
+        return verify;
+    }
+
 }

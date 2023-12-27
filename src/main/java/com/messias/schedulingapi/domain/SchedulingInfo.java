@@ -3,6 +3,7 @@ package com.messias.schedulingapi.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,11 +12,12 @@ public class SchedulingInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private boolean hasScheduling;
+    @Column(nullable = false)
+    private Boolean hasScheduling;
     private String description;
     @JsonIgnore
     @OneToMany(mappedBy = "schedulingInfo")
-    private List<Scheduling> schedulings;
+    private List<Scheduling> schedulingList = new ArrayList<>();
 
     public SchedulingInfo() {
     }
@@ -50,12 +52,12 @@ public class SchedulingInfo {
         this.description = description;
     }
 
-    public List<Scheduling> getSchedulings() {
-        return schedulings;
+    public List<Scheduling> getSchedulingList() {
+        return schedulingList;
     }
 
-    public void setSchedulings(List<Scheduling> schedulings) {
-        this.schedulings = schedulings;
+    public void setSchedulingList(List<Scheduling> schedulingList) {
+        this.schedulingList = schedulingList;
     }
 
     @Override

@@ -34,6 +34,7 @@ public class Scheduling {
     @JsonIgnore
     @OneToMany(mappedBy = "scheduling")
     private List<SchedulingEmployer> schedulingEmployerList = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "id_scheduling_info", nullable = false)
     private SchedulingInfo schedulingInfo;

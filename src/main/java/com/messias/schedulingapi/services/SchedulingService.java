@@ -1,10 +1,7 @@
 package com.messias.schedulingapi.services;
 
 
-import com.messias.schedulingapi.domain.Branch;
-import com.messias.schedulingapi.domain.Doctor;
-import com.messias.schedulingapi.domain.Scheduling;
-import com.messias.schedulingapi.domain.User;
+import com.messias.schedulingapi.domain.*;
 import com.messias.schedulingapi.repositories.SchedulingRepository;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
@@ -20,12 +17,14 @@ public class SchedulingService {
     private final BranchService branchService;
     private final UserService userService;
     private final DoctorService doctorService;
+    private final SchedulingInfoService schedulingInfoService;
 
-    public SchedulingService(SchedulingRepository schedulingRepository, BranchService branchService, UserService userService, DoctorService doctorService) {
+    public SchedulingService(SchedulingRepository schedulingRepository, BranchService branchService, UserService userService, DoctorService doctorService, SchedulingInfoService schedulingInfoService) {
         this.schedulingRepository = schedulingRepository;
         this.branchService = branchService;
         this.userService = userService;
         this.doctorService = doctorService;
+        this.schedulingInfoService = schedulingInfoService;
     }
 
     public void delete(Integer idScheduling) {
@@ -46,13 +45,17 @@ public class SchedulingService {
     }
 
     public Scheduling insert(Scheduling newScheduling) {
-
         Doctor doctor = doctorService.findById(newScheduling.getDoctor().getId());
         Branch branch = branchService.findById(newScheduling.getBranch().getId());
         User user = userService.findById(newScheduling.getUser().getId());
-        user.getSchedulingList().add(newScheduling);
+        SchedulingInfo schedulingInfo = schedulingInfoService.findById(newScheduling.getSchedulingInfo().getId());
+
+        schedulingInfo.getSchedulingList().add(newScheduling);
         branch.getSchedulingList().add(newScheduling);
         doctor.getSchedulingList().add(newScheduling);
+        user.getSchedulingList().add(newScheduling);
+
+        newScheduling.setSchedulingInfo(schedulingInfo);
         newScheduling.setBranch(branch);
         newScheduling.setDoctor(doctor);
         newScheduling.setUser(user);
@@ -71,6 +74,7 @@ public class SchedulingService {
         oldScheduling.getDoctor().getSchedulingList().remove(oldScheduling);
         oldScheduling.getUser().getSchedulingList().remove(oldScheduling);
         oldScheduling.getBranch().getSchedulingList().remove(oldScheduling);
+        oldScheduling.getSchedulingInfo().getSchedulingList().remove(oldScheduling);
 
         //Updating entity data
         oldScheduling.setUser(updateScheduling.getUser());
@@ -79,11 +83,13 @@ public class SchedulingService {
         oldScheduling.setDateScheduling(updateScheduling.getDateScheduling());
         oldScheduling.setEndOfService(updateScheduling.getEndOfService());
         oldScheduling.setStartOfService(updateScheduling.getStartOfService());
+        oldScheduling.setSchedulingInfo(updateScheduling.getSchedulingInfo());
 
         //Adding the updated scheduling entity to the lists in the user, branch, and doctor entities.
         updateScheduling.getUser().getSchedulingList().add(oldScheduling);
         updateScheduling.getBranch().getSchedulingList().add(oldScheduling);
         updateScheduling.getDoctor().getSchedulingList().add(oldScheduling);
+        updateScheduling.getSchedulingInfo().getSchedulingList().add(oldScheduling);
 
     }
 

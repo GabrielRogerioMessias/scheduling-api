@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.controllers.exceptions;
 
+import com.messias.schedulingapi.services.exceptionsServices.CannotScheduleException;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServlet;
@@ -20,9 +21,18 @@ public class ControllerExceptionHandler {
         StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(standardError);
     }
+
     @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<StandardError> databaseException(DatabaseException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> databaseException(DatabaseException e, HttpServletRequest request) {
         String error = "Database error";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(standardError);
+    }
+
+    @ExceptionHandler(CannotScheduleException.class)
+    public ResponseEntity<StandardError> cannotScheduleException(CannotScheduleException e, HttpServletRequest request) {
+        String error = "Schedule error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(standardError);
