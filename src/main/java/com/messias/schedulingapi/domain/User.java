@@ -1,7 +1,6 @@
 package com.messias.schedulingapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.messias.schedulingapi.domain.enums.UserRoles;
 import jakarta.persistence.*;
 
 
@@ -19,8 +18,6 @@ public class User {
     private String name;
     private String login;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private UserRoles roles;
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Scheduling> schedulingList = new ArrayList<>();
