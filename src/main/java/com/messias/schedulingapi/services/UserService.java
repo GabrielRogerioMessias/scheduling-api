@@ -1,6 +1,5 @@
 package com.messias.schedulingapi.services;
 
-import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.domain.User;
 import com.messias.schedulingapi.repositories.UserRepository;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
@@ -46,6 +45,6 @@ public class UserService {
     }
 
     public void updateDate(User oldUser, User updateUser) {
-        oldUser.setName(updateUser.getName());
+        oldUser.setFullName(updateUser.getFullName());
     }
 }
