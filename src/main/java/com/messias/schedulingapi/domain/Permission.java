@@ -4,15 +4,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
 @Entity
-public class Permission {
+public class Permission implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String description;
+
+    @Override
+    public String getAuthority() {
+        return description;
+    }
 
     public Permission() {
     }
@@ -50,4 +56,6 @@ public class Permission {
     public int hashCode() {
         return Objects.hash(id, description);
     }
+
+
 }
