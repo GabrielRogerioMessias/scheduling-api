@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.controllers.exceptions;
 
+import com.messias.schedulingapi.exceptions.InvalidJwtAuthenticationException;
 import com.messias.schedulingapi.services.exceptionsServices.CannotScheduleException;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
@@ -34,6 +35,14 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> cannotScheduleException(CannotScheduleException e, HttpServletRequest request) {
         String error = "Schedule error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(standardError);
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public ResponseEntity<StandardError> cannotScheduleException(InvalidJwtAuthenticationException e, HttpServletRequest request) {
+        String error = "Invalid JWT Authentication";
+        HttpStatus status = HttpStatus.FORBIDDEN;
         StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(standardError);
     }

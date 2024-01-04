@@ -3,6 +3,7 @@ package com.messias.schedulingapi.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     //quando o user for carregado, também carregara de forma automatica suas permissões
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_permission"))
-    private List<Permission> permission;
+    private List<Permission> permissionList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -39,6 +40,14 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<SchedulingEmployer> schedulingEmployerList = new ArrayList<>();
+
+    public List<String> getRoles() {
+        List<String> roles = new ArrayList<>();
+        for (Permission permission : permissionList) {
+            roles.add(permission.getDescription());
+        }
+        return roles;
+    }
 
     public User() {
     }
@@ -76,7 +85,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return permissionList;
     }
 
     public String getPassword() {
