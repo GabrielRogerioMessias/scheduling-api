@@ -22,7 +22,7 @@ public class AuthController {
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody AccountCredentialsVO data) {
         if (checkIfParamsIsNotNull(data)) {
-            return ResponseEntity.ok().body("caiu aqui");
+            return ResponseEntity.ok().body("Invalid Client Request");
         }
         var token = authServices.signin(data);
         if (token == null) {

@@ -8,6 +8,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,6 +51,11 @@ public class UserService implements UserDetailsService {
     }
 
     public User insert(User user) {
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+        user.setPassword(encoder().encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -56,6 +63,10 @@ public class UserService implements UserDetailsService {
         User oldUser = userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(User.class, idUser));
         this.updateDate(oldUser, updateUser);
         return userRepository.save(oldUser);
+    }
+
+    private PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
     public void updateDate(User oldUser, User updateUser) {

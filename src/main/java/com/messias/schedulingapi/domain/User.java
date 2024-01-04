@@ -19,8 +19,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String fullName;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
     @Column(name = "account_non_expired")
     private Boolean accountNonExpired;

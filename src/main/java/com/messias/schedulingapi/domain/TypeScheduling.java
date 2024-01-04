@@ -13,6 +13,7 @@ public class TypeScheduling {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTypeScheduling;
+
     private String description;
     @JsonIgnore
     @OneToMany(mappedBy = "typeScheduling")
