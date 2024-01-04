@@ -8,8 +8,8 @@ public class TokenVO {
     private Boolean authenticated;
     private Date created;
     private Date expiration;
-    private String acessToken;
-    private String reflashToken;
+    private String accessToken;
+    private String refreshToken;
 
     public TokenVO() {
     }
@@ -19,8 +19,8 @@ public class TokenVO {
         this.authenticated = authenticated;
         this.created = created;
         this.expiration = expiration;
-        this.acessToken = acessToken;
-        this.reflashToken = reflashToken;
+        this.accessToken = acessToken;
+        this.refreshToken = reflashToken;
     }
 
     public String getUsername() {
@@ -55,20 +55,20 @@ public class TokenVO {
         this.expiration = expiration;
     }
 
-    public String getAcessToken() {
-        return acessToken;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAcessToken(String acessToken) {
-        this.acessToken = acessToken;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getReflashToken() {
-        return reflashToken;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public void setReflashToken(String reflashToken) {
-        this.reflashToken = reflashToken;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
     @Override
@@ -76,11 +76,11 @@ public class TokenVO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TokenVO tokenVO = (TokenVO) o;
-        return Objects.equals(username, tokenVO.username) && Objects.equals(authenticated, tokenVO.authenticated) && Objects.equals(created, tokenVO.created) && Objects.equals(expiration, tokenVO.expiration) && Objects.equals(acessToken, tokenVO.acessToken) && Objects.equals(reflashToken, tokenVO.reflashToken);
+        return Objects.equals(username, tokenVO.username) && Objects.equals(authenticated, tokenVO.authenticated) && Objects.equals(created, tokenVO.created) && Objects.equals(expiration, tokenVO.expiration) && Objects.equals(accessToken, tokenVO.accessToken) && Objects.equals(refreshToken, tokenVO.refreshToken);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, authenticated, created, expiration, acessToken, reflashToken);
+        return Objects.hash(username, authenticated, created, expiration, accessToken, refreshToken);
     }
 }
