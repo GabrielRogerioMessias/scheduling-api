@@ -154,11 +154,11 @@ public class User implements UserDetails {
     }
 
     public List<Permission> getPermission() {
-        return permission;
+        return permissionList;
     }
 
     public void setPermission(List<Permission> permission) {
-        this.permission = permission;
+        this.permissionList = permission;
     }
 
     public List<Scheduling> getSchedulingList() {

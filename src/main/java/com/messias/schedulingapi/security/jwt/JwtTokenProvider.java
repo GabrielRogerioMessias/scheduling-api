@@ -1,4 +1,4 @@
-package com.messias.schedulingapi.security;
+package com.messias.schedulingapi.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -13,13 +13,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-public class JWTTokenProvider {
+@Service
+
+public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
 
@@ -29,7 +32,7 @@ public class JWTTokenProvider {
     private long valityInMilliseconds = 3600000;
     Algorithm algorithm = null;
 
-    public JWTTokenProvider(UserDetailsService userDetailsService) {
+    public JwtTokenProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -39,7 +42,7 @@ public class JWTTokenProvider {
         algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
 
-    public TokenVO creatAssToken(String username, List<String> roles) {
+    public TokenVO createAccessToken(String username, List<String> roles) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + valityInMilliseconds);
         var accessToken = getAccessToken(username, roles, now, validity);
