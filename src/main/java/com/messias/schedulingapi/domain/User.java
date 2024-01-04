@@ -18,11 +18,14 @@ public class User {
     private String fullName;
     private String login;
     private String password;
+    @Column(name = "account_non_expired")
     private Boolean accountNonExpired;
+    @Column(name = "account_non_locked")
     private Boolean accountNonLocked;
+    @Column(name = "credentials_non_expired")
     private Boolean credentialsNonExpired;
-
-    @ManyToMany
+    //quando o user for carregado, também carregara de forma automatica suas permissões
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_permission"))
     private List<Permission> permission;
 
