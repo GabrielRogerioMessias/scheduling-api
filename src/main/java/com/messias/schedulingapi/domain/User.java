@@ -180,6 +180,14 @@ public class User implements UserDetails {
         this.schedulingEmployerList = schedulingEmployerList;
     }
 
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

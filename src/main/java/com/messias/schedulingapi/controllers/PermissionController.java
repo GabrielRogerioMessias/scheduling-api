@@ -19,6 +19,12 @@ public class PermissionController {
         this.permissionService = permissionService;
     }
 
+    @DeleteMapping(value = "/{idPermission}")
+    public ResponseEntity<Void> delete(@PathVariable Integer idPermission) {
+        permissionService.delete(idPermission);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity<List<Permission>> findAll() {
         List<Permission> permissionList = permissionService.findAll();
@@ -29,12 +35,6 @@ public class PermissionController {
     public ResponseEntity<Permission> findById(@PathVariable Integer idPermission) {
         Permission permission = permissionService.findById(idPermission);
         return ResponseEntity.ok().body(permission);
-    }
-
-    @DeleteMapping(value = "/idPermission")
-    public ResponseEntity<Void> delete(@PathVariable Integer idPermission) {
-        permissionService.delete(idPermission);
-        return ResponseEntity.noContent().build();
     }
 
     @PostMapping

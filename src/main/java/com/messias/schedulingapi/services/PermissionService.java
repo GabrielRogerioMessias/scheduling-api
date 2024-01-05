@@ -5,10 +5,9 @@ import com.messias.schedulingapi.repositories.PermissionRepository;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.PanelUI;
+
 import java.util.List;
 
 @Service

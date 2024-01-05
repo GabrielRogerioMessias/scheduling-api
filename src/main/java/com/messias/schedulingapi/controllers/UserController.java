@@ -2,6 +2,7 @@ package com.messias.schedulingapi.controllers;
 
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.domain.User;
+import com.messias.schedulingapi.domain.dtos.UserDTO;
 import com.messias.schedulingapi.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,11 +40,11 @@ public class UserController {
         return ResponseEntity.ok().body(userResult);
     }
 
-    @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User newUser) {
-        User user = userService.insert(newUser);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(user);
+    @PostMapping("")
+    public ResponseEntity<User> insert(@RequestBody UserDTO userDTO) {
+        User newUser = userService.insert(userDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newUser.getId()).toUri();
+        return ResponseEntity.created(uri).body(newUser);
     }
 
     @PutMapping("{idUser}")

@@ -1,8 +1,12 @@
 package com.messias.schedulingapi.services;
 
+import com.messias.schedulingapi.domain.Permission;
 import com.messias.schedulingapi.domain.User;
+import com.messias.schedulingapi.domain.dtos.UserDTO;
+import com.messias.schedulingapi.repositories.PermissionRepository;
 import com.messias.schedulingapi.repositories.UserRepository;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceAlreadyRegisteredException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +21,13 @@ import java.util.List;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final PermissionRepository permissionRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PermissionRepository permissionRepository) {
         this.userRepository = userRepository;
+        this.permissionRepository = permissionRepository;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -50,14 +57,44 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User insert(User user) {
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
-        user.setEnabled(true);
-        user.setPassword(encoder().encode(user.getPassword()));
-        return userRepository.save(user);
+//    public User insert(User newUser) {
+//        List<Integer> idPermissionsList = new ArrayList<>();
+//        if (userRepository.findByUsername(newUser.getUsername()) != null) {
+//            throw new ResourceAlreadyRegisteredException(User.class, newUser.getUsername());
+//        }
+//
+//        newUser.setAccountNonExpired(true);
+//        newUser.setAccountNonLocked(true);
+//        newUser.setCredentialsNonExpired(true);
+//        newUser.setEnabled(true);
+//        //encrepting password the user
+//        newUser.setPassword(encoder().encode(newUser.getPassword()));
+//
+//
+//        return userRepository.save(newUser);
+//    }
+
+    public User insert(UserDTO userDTO) {
+        if (userRepository.findByUsername(userDTO.getUsername()) != null) {
+            throw new ResourceAlreadyRegisteredException(User.class, userDTO.getUsername());
+        } else {
+            User newUser = new User();
+
+            newUser.setPassword(this.encoder().encode(userDTO.getPassword()));
+            newUser.setFullName(userDTO.getFullName());
+            newUser.setUsername(userDTO.getUsername());
+            newUser.setEnabled(true);
+            newUser.setCredentialsNonExpired(true);
+            newUser.setAccountNonExpired(true);
+            newUser.setAccountNonLocked(true);
+            newUser.setEnabled(true);
+
+            List<Permission> permissionList = permissionRepository.findAllById(userDTO.getPermissionIds());
+            newUser.setPermissionList(permissionList);
+            return userRepository.save(newUser);
+        }
     }
+
 
     public User update(Integer idUser, User updateUser) {
         User oldUser = userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(User.class, idUser));
