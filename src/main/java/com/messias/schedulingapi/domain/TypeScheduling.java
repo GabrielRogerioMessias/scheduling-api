@@ -13,7 +13,7 @@ public class TypeScheduling {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTypeScheduling;
-
+    @Column(nullable = false)
     private String description;
     @JsonIgnore
     @OneToMany(mappedBy = "typeScheduling")

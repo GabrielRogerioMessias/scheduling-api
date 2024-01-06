@@ -50,7 +50,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(ResourceAlreadyRegisteredException.class)
     public ResponseEntity<StandardError> cannotScheduleException(ResourceAlreadyRegisteredException e, HttpServletRequest request) {
-        String error = "Username already registered";
+        String error = "username already in use";
         HttpStatus status = HttpStatus.CONFLICT;
         StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(standardError);
