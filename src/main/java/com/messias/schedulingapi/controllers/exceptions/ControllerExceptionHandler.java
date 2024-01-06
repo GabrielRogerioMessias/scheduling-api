@@ -3,6 +3,7 @@ package com.messias.schedulingapi.controllers.exceptions;
 import com.messias.schedulingapi.exceptions.InvalidJwtAuthenticationException;
 import com.messias.schedulingapi.services.exceptionsServices.CannotScheduleException;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceAlreadyRegisteredException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,7 +47,14 @@ public class ControllerExceptionHandler {
         StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(standardError);
     }
-    
+
+    @ExceptionHandler(ResourceAlreadyRegisteredException.class)
+    public ResponseEntity<StandardError> cannotScheduleException(ResourceAlreadyRegisteredException e, HttpServletRequest request) {
+        String error = "Username already registered";
+        HttpStatus status = HttpStatus.CONFLICT;
+        StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(standardError);
+    }
 
 
 }

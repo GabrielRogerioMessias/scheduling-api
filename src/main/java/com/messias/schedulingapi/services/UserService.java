@@ -57,22 +57,6 @@ public class UserService implements UserDetailsService {
         }
     }
 
-//    public User insert(User newUser) {
-//        List<Integer> idPermissionsList = new ArrayList<>();
-//        if (userRepository.findByUsername(newUser.getUsername()) != null) {
-//            throw new ResourceAlreadyRegisteredException(User.class, newUser.getUsername());
-//        }
-//
-//        newUser.setAccountNonExpired(true);
-//        newUser.setAccountNonLocked(true);
-//        newUser.setCredentialsNonExpired(true);
-//        newUser.setEnabled(true);
-//        //encrepting password the user
-//        newUser.setPassword(encoder().encode(newUser.getPassword()));
-//
-//
-//        return userRepository.save(newUser);
-//    }
 
     public User insert(UserDTO userDTO) {
         if (userRepository.findByUsername(userDTO.getUsername()) != null) {
