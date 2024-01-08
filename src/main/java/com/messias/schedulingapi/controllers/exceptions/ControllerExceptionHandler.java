@@ -1,5 +1,6 @@
 package com.messias.schedulingapi.controllers.exceptions;
 
+import com.messias.schedulingapi.exceptions.CustomBadCredentialsException;
 import com.messias.schedulingapi.exceptions.InvalidJwtAuthenticationException;
 import com.messias.schedulingapi.services.exceptionsServices.CannotScheduleException;
 import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
@@ -52,6 +53,14 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> cannotScheduleException(ResourceAlreadyRegisteredException e, HttpServletRequest request) {
         String error = "username already in use";
         HttpStatus status = HttpStatus.CONFLICT;
+        StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(standardError);
+    }
+
+    @ExceptionHandler(CustomBadCredentialsException.class)
+    public ResponseEntity<StandardError> cannotScheduleException(CustomBadCredentialsException e, HttpServletRequest request) {
+        String error = "Username or Password Invalid";
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         StandardError standardError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(standardError);
     }

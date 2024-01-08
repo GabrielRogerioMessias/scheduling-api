@@ -1,10 +1,12 @@
 package com.messias.schedulingapi.controllers;
 
 import com.messias.schedulingapi.config.SecurityConfig;
+import com.messias.schedulingapi.exceptions.CustomBadCredentialsException;
 import com.messias.schedulingapi.services.AuthServices;
 import com.messias.schedulingapi.vo.security.AccountCredentialsVO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,14 +26,17 @@ public class AuthController {
         if (checkIfParamsIsNotNull(data)) {
             return ResponseEntity.ok().body("Invalid Client Request");
         }
-        var token = authServices.signin(data);
-        if (token == null) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid Client Request");
+        try {
+            var token = authServices.signin(data);
+            if (token == null) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid Client Request");
+            }
+            return token;
+        } catch (BadCredentialsException e) {
+            throw new CustomBadCredentialsException(e.getMessage());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
         }
-
-        return token;
-
-
     }
 
     private boolean checkIfParamsIsNotNull(AccountCredentialsVO data) {
