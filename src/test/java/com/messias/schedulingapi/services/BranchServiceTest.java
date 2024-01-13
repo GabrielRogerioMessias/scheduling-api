@@ -12,8 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class BranchServiceTest {
@@ -30,7 +32,7 @@ class BranchServiceTest {
     }
 
     @Test
-    public void findAll() {
+    void findAll() {
         List<Branch> branchList = new ArrayList<>();
         Branch branch1 = new Branch(1, "Branch1", "City1");
         Branch branch2 = new Branch(1, "Branch1", "City2");
@@ -46,7 +48,17 @@ class BranchServiceTest {
 
         assertEquals(branchList, branches);
 
+    }
+
+    @Test
+    void findById() {
+        Branch branch1 = new Branch(1, "Branch1", "City1");
+        when(branchRepository.findById(1)).thenReturn(Optional.of(branch1));
+        Branch result = branchService.findById(1);
+        verify(branchRepository).findById(1);
+        assertEquals(branch1, result);
 
     }
+
 
 }
