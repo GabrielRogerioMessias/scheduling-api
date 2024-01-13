@@ -57,7 +57,6 @@ class BranchServiceTest {
         Branch result = branchService.findById(1);
         verify(branchRepository).findById(1);
         assertEquals(branch1, result);
-
     }
 
 
