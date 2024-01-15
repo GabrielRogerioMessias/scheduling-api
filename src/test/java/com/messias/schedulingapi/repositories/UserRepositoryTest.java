@@ -22,7 +22,7 @@ class UserRepositoryTest {
     @Test
     void findByUsernameSucess() {
         String username = "gmessias";
-        User user = new User(1,"Gabriel R Messias", "gmessias", "q1w2e3r4", true, true, true, true);
+        User user = new User(1, "Gabriel R Messias", "gmessias", "q1w2e3r4", true, true, true, true);
         // Persiste a entidade usando o método persist
         this.entityManager.merge(user);
         // Realiza a busca
@@ -31,5 +31,13 @@ class UserRepositoryTest {
 
     }
 
-    
+    @Test
+    void findByUsernameNotSucess() {
+        String username = "gmessias";
+        User userResponse = userRepository.findByUsername(username);
+        assertEquals(null, userResponse);
+
+    }
+
+
 }
