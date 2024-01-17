@@ -20,7 +20,7 @@ class UserRepositoryTest {
     UserRepository userRepository;
 
     @Test
-    void findByUsernameSucess() {
+    void findByUsernameSuccess() {
         String username = "gmessias";
         User user = new User(1, "Gabriel R Messias", "gmessias", "q1w2e3r4", true, true, true, true);
         // Persiste a entidade usando o método persist
@@ -32,7 +32,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void findByUsernameNotSucess() {
+    void findByUsernameNotSuccess() {
         String username = "gmessias";
         User userResponse = userRepository.findByUsername(username);
         assertEquals(null, userResponse);
