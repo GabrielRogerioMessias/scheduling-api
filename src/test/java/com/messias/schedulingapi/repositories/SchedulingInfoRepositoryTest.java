@@ -25,7 +25,7 @@ class SchedulingInfoRepositoryTest {
     SchedulingInfoRepository schedulingInfoRepository;
 
     @Autowired
-    TestEntityManager entityManager;
+    EntityManager entityManager;
 
 
     @Test
@@ -36,5 +36,6 @@ class SchedulingInfoRepositoryTest {
         Boolean result = schedulingInfoRepository.findByHasScheduling(1);
         assertTrue(result);
     }
-    
+
+
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
@@ -23,12 +24,13 @@ class BranchServiceTest {
     @Mock
     private BranchRepository branchRepository;
 
-    private BranchService branchService;
+    @InjectMocks
+    BranchService branchService;
+
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        branchService = new BranchService(branchRepository);
     }
 
     @Test
@@ -42,10 +44,8 @@ class BranchServiceTest {
         branchList.add(branch2);
         branchList.add(branch3);
 
-        when(branchRepository.findAll()).thenReturn(branchList);
-
+        when(branchService.findAll()).thenReturn(branchList);
         List<Branch> branches = branchService.findAll();
-
         assertEquals(branchList, branches);
 
     }
@@ -59,5 +59,17 @@ class BranchServiceTest {
         assertEquals(branch1, result);
     }
 
+    @Test
+    void insert() {
+        Branch newBranch = new Branch(1, "Branch1", "City1");
+        when(branchRepository.save(newBranch)).thenReturn(newBranch);
+        Branch result = branchService.insert(newBranch);
 
+        assertNotNull(result);
+        assertEquals(newBranch.getId(), result.getId());
+        assertEquals(newBranch.getNameBranch(), result.getNameBranch());
+        assertEquals(newBranch.getCity(), result.getCity());
+        //verifica se o método foi chamado com o novo branch
+        verify(branchRepository).save(newBranch);
+    }
 }
