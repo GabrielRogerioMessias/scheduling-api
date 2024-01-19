@@ -34,6 +34,27 @@ class BranchServiceTest {
     }
 
     @Test
+    void update() {
+        Integer idBranch = 1;
+        Branch updateBranch = new Branch(idBranch, "Branch1", "City1");
+        Branch oldBranch = new Branch(idBranch, "UpdateBranch", "NewCity");
+
+        when(branchRepository.findById(idBranch)).thenReturn(java.util.Optional.of(oldBranch));
+        when(branchRepository.save(oldBranch)).thenReturn(oldBranch);
+
+        Branch result = branchService.update(idBranch, updateBranch);
+        verify(branchService).updateDate(oldBranch, updateBranch);
+        assertEquals(result.getNameBranch(), updateBranch.getNameBranch());
+        assertEquals(result.getCity(), updateBranch.getCity());
+        verify(branchRepository).save(oldBranch);
+    }
+
+
+    @Test
+    void updateDate() {
+    }
+
+    @Test
     void findAll() {
         List<Branch> branchList = new ArrayList<>();
         Branch branch1 = new Branch(1, "Branch1", "City1");
@@ -72,4 +93,6 @@ class BranchServiceTest {
         //verifica se o método foi chamado com o novo branch
         verify(branchRepository).save(newBranch);
     }
+
+
 }
