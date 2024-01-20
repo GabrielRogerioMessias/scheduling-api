@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class BranchServiceTest {
 
@@ -43,16 +42,11 @@ class BranchServiceTest {
         when(branchRepository.save(oldBranch)).thenReturn(oldBranch);
 
         Branch result = branchService.update(idBranch, updateBranch);
-        verify(branchService).updateDate(oldBranch, updateBranch);
         assertEquals(result.getNameBranch(), updateBranch.getNameBranch());
         assertEquals(result.getCity(), updateBranch.getCity());
         verify(branchRepository).save(oldBranch);
     }
 
-
-    @Test
-    void updateDate() {
-    }
 
     @Test
     void findAll() {
@@ -94,5 +88,15 @@ class BranchServiceTest {
         verify(branchRepository).save(newBranch);
     }
 
+    @Test
+    void delete() {
+        Integer idBranch = 1;
+        Branch deleteBranch = new Branch(idBranch, "Branch1", "City");
+        when(branchRepository.findById(idBranch)).thenReturn(java.util.Optional.of(deleteBranch));
+        doNothing().when(branchRepository).delete(deleteBranch);
+        assertDoesNotThrow(() -> branchService.delete(idBranch));
+        verify(branchRepository).findById(idBranch);
+
+    }
 
 }
