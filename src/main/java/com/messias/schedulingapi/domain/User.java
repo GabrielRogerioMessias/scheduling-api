@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<SchedulingEmployer> schedulingEmployerList = new ArrayList<>();
 
-    public User( String fullName, String username, String password) {
+    public User(String fullName, String username, String password) {
         this.fullName = fullName;
         this.username = username;
         this.password = password;
