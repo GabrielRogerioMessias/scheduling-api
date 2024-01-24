@@ -2,15 +2,11 @@ package com.messias.schedulingapi.services;
 
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.repositories.BranchRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
