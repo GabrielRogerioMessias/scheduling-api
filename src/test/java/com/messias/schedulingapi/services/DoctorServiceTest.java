@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -44,5 +47,26 @@ class DoctorServiceTest {
         verify(doctorRepository).save(newDoctor);
     }
 
+    @Test
+    void findAll() {
+        List<Doctor> listDoctor = new ArrayList<>();
+        Doctor doctor1 = new Doctor(1, "Doctor Test", "0150156");
+        Doctor doctor2 = new Doctor(2, "Doctor Test", "0150156");
+        Doctor doctor3 = new Doctor(3, "Doctor Test", "0150156");
+
+        listDoctor.add(doctor1);
+        listDoctor.add(doctor2);
+        listDoctor.add(doctor3);
+
+        when(doctorRepository.findAll()).thenReturn(listDoctor);
+
+        List<Doctor> result = doctorService.findAll();
+
+        assertNotNull(result);
+        assertEquals(listDoctor, result);
+        assertEquals(listDoctor.size(), result.size());
+        verify(doctorRepository).findAll();
+
+    }
 
 }
