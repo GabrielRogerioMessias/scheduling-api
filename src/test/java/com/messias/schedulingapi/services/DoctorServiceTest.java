@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -67,6 +68,19 @@ class DoctorServiceTest {
         assertEquals(listDoctor.size(), result.size());
         verify(doctorRepository).findAll();
 
+    }
+
+    @Test
+    void findById() {
+        Integer idDoctor = 1;
+        Doctor doctor1 = new Doctor(idDoctor, "Doctor Test", "0150156");
+        when(doctorRepository.findById(idDoctor)).thenReturn(Optional.of(doctor1));
+
+        Doctor result = doctorService.findById(idDoctor);
+
+        assertEquals(doctor1, result);
+        assertNotNull(result);
+        verify(doctorRepository).findById(idDoctor);
     }
 
 }
