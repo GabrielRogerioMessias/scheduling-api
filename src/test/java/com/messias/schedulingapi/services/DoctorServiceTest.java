@@ -3,15 +3,11 @@ package com.messias.schedulingapi.services;
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.domain.Doctor;
 import com.messias.schedulingapi.repositories.DoctorRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +77,24 @@ class DoctorServiceTest {
         assertEquals(doctor1, result);
         assertNotNull(result);
         verify(doctorRepository).findById(idDoctor);
+    }
+
+    @Test
+    void update() {
+        Integer idDoctor = 1;
+        Doctor oldDoctor = new Doctor(idDoctor, "Doctor Test", "0150156");
+        Doctor updateDoctor = new Doctor(idDoctor, "Doctor updated", "005005");
+
+        when(doctorRepository.findById(idDoctor)).thenReturn(Optional.of(oldDoctor));
+        when(doctorRepository.save(oldDoctor)).thenReturn(oldDoctor);
+
+        Doctor result = doctorService.update(idDoctor, updateDoctor);
+        assertNotNull(result);
+        assertEquals(result.getId(), updateDoctor.getId());
+        assertEquals(result.getName(), updateDoctor.getName());
+        assertEquals(result.getCRM(), updateDoctor.getCRM());
+        verify(doctorRepository).save(oldDoctor);
+
     }
 
 }
