@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class DoctorServiceTest {
@@ -94,6 +93,19 @@ class DoctorServiceTest {
         assertEquals(result.getName(), updateDoctor.getName());
         assertEquals(result.getCRM(), updateDoctor.getCRM());
         verify(doctorRepository).save(oldDoctor);
+
+    }
+
+    @Test
+    void delete() {
+        Integer idDoctor = 1;
+        Doctor deleteDocotr = new Doctor(idDoctor, "Doctor Test", "0150156");
+        when(doctorRepository.findById(idDoctor)).thenReturn(Optional.of(deleteDocotr));
+
+        doNothing().when(doctorRepository).delete(deleteDocotr);
+        assertDoesNotThrow(() -> doctorService.delete(idDoctor));
+        verify(doctorRepository).findById(idDoctor);
+        verify(doctorRepository).delete(deleteDocotr);
 
     }
 
