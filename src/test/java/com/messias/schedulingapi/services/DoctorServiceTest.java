@@ -3,6 +3,7 @@ package com.messias.schedulingapi.services;
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.domain.Doctor;
 import com.messias.schedulingapi.repositories.DoctorRepository;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -106,6 +107,15 @@ class DoctorServiceTest {
         assertDoesNotThrow(() -> doctorService.delete(idDoctor));
         verify(doctorRepository).findById(idDoctor);
         verify(doctorRepository).delete(deleteDocotr);
+    }
+
+    @Test
+    void deleteCase2() {
+        Integer idDoctor = 1;
+        when(doctorRepository.findById(idDoctor)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> doctorService.delete(idDoctor));
+        verify(doctorRepository).findById(idDoctor);
+        verify(doctorRepository, never()).delete(any());
 
     }
 
