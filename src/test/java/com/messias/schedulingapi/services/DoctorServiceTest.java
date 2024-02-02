@@ -80,6 +80,14 @@ class DoctorServiceTest {
     }
 
     @Test
+    void findByIdCase2() {
+        Integer idDoctor = 1;
+        when(doctorRepository.findById(idDoctor)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> doctorService.findById(idDoctor));
+        verify(doctorRepository).findById(idDoctor);
+    }
+
+    @Test
     void update() {
         Integer idDoctor = 1;
         Doctor oldDoctor = new Doctor(idDoctor, "Doctor Test", "0150156");
@@ -116,7 +124,6 @@ class DoctorServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> doctorService.delete(idDoctor));
         verify(doctorRepository).findById(idDoctor);
         verify(doctorRepository, never()).delete(any());
-
     }
 
 }
