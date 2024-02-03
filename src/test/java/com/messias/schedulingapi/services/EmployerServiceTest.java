@@ -2,6 +2,7 @@ package com.messias.schedulingapi.services;
 
 import com.messias.schedulingapi.domain.Employer;
 import com.messias.schedulingapi.repositories.EmployerRepository;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -37,5 +38,14 @@ class EmployerServiceTest {
 
     @Test
     void deleteCase2() {
+        Integer idEmployer = 1;
+        Employer employer = new Employer(idEmployer, "Employer Test");
+        when(employerRepository.findById(idEmployer)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> employerService.delete(idEmployer));
+
+        verify(employerRepository).findById(idEmployer);
+        verify(employerRepository, never()).delete(any());
+
     }
 }
