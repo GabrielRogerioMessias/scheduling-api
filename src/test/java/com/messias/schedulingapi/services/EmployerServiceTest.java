@@ -39,13 +39,31 @@ class EmployerServiceTest {
     @Test
     void deleteCase2() {
         Integer idEmployer = 1;
-        Employer employer = new Employer(idEmployer, "Employer Test");
         when(employerRepository.findById(idEmployer)).thenReturn(Optional.empty());
-
         assertThrows(ResourceNotFoundException.class, () -> employerService.delete(idEmployer));
-
         verify(employerRepository).findById(idEmployer);
         verify(employerRepository, never()).delete(any());
+    }
 
+    @Test
+    void findByIdCase1() {
+        Integer idEmployer = 1;
+        Employer employer = new Employer(idEmployer, "Employer Test");
+        when(employerRepository.findById(idEmployer)).thenReturn(Optional.of(employer));
+
+        Employer result = employerRepository.findById(idEmployer).get();
+
+        assertEquals(employer, result);
+        assertDoesNotThrow(() -> employerService.findById(1));
+        assertNotNull(result);
+        assertEquals(employer.getName(), result.getName());
+    }
+
+    @Test
+    void findByIdCase2() {
+        Integer idEmployer = 1;
+        when(employerRepository.findById(idEmployer)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> employerService.findById(idEmployer));
+        verify(employerRepository).findById(idEmployer);
     }
 }
