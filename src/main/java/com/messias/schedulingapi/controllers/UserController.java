@@ -1,6 +1,5 @@
 package com.messias.schedulingapi.controllers;
 
-import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.domain.User;
 import com.messias.schedulingapi.domain.dtos.UserDTO;
 import com.messias.schedulingapi.services.UserService;

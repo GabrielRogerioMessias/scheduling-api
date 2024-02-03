@@ -1,10 +1,7 @@
 package com.messias.schedulingapi.controllers;
 
-import com.messias.schedulingapi.domain.Doctor;
 import com.messias.schedulingapi.domain.Employer;
-import com.messias.schedulingapi.services.DoctorService;
 import com.messias.schedulingapi.services.EmployerService;
-import com.messias.schedulingapi.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

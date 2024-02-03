@@ -1,7 +1,6 @@
 package com.messias.schedulingapi.controllers;
 
 import com.messias.schedulingapi.domain.Doctor;
-import com.messias.schedulingapi.services.BranchService;
 import com.messias.schedulingapi.services.DoctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

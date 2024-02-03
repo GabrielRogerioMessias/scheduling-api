@@ -2,8 +2,6 @@ package com.messias.schedulingapi.controllers;
 
 import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.services.BranchService;
-import com.messias.schedulingapi.services.UserService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

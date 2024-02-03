@@ -4,7 +4,6 @@ import com.messias.schedulingapi.domain.*;
 import com.messias.schedulingapi.repositories.*;
 import com.messias.schedulingapi.services.exceptionsServices.CannotScheduleException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 
 

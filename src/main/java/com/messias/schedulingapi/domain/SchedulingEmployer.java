@@ -1,7 +1,6 @@
 package com.messias.schedulingapi.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
