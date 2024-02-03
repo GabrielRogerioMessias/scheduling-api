@@ -1,6 +1,5 @@
 package com.messias.schedulingapi.services;
 
-import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.domain.Doctor;
 import com.messias.schedulingapi.repositories.DoctorRepository;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;

@@ -20,7 +20,6 @@ public class EmployerController {
         this.employerService = employerService;
     }
 
-
     @DeleteMapping(value = "/{idEmployer}")
     public ResponseEntity<Void> delete(@PathVariable Integer idEmployer) {
         employerService.delete(idEmployer);

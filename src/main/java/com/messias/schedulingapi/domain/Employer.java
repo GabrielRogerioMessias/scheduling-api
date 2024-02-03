@@ -22,10 +22,9 @@ public class Employer {
     public Employer() {
     }
 
-    public Employer(Integer id, String name, List<SchedulingEmployer> schedulingEmployerList) {
+    public Employer(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.schedulingEmployerList = schedulingEmployerList;
     }
 
     public List<SchedulingEmployer> getSchedulingEmployerList() {
