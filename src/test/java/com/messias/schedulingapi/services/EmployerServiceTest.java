@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,5 +68,24 @@ class EmployerServiceTest {
         when(employerRepository.findById(idEmployer)).thenReturn(Optional.empty());
         assertThrows(ResourceNotFoundException.class, () -> employerService.findById(idEmployer));
         verify(employerRepository).findById(idEmployer);
+    }
+
+    @Test
+    void findAll() {
+        List<Employer> list = new ArrayList<>();
+        Employer employer1 = new Employer(1, "Employer Test");
+        Employer employer2 = new Employer(2, "Employer Test");
+        Employer employer3 = new Employer(3, "Employer Test");
+        list.add(employer3);
+        list.add(employer2);
+        list.add(employer1);
+        when(employerRepository.findAll()).thenReturn(list);
+
+        List<Employer> result = employerService.findAll();
+
+        verify(employerRepository).findAll();
+        assertEquals(list, result);
+        assertEquals(list.size(), result.size());
+        assertDoesNotThrow(() -> employerService.findAll());
     }
 }
