@@ -88,4 +88,20 @@ class EmployerServiceTest {
         assertEquals(list.size(), result.size());
         assertDoesNotThrow(() -> employerService.findAll());
     }
+
+    @Test
+    void insertCase1() {
+        Integer idEmployer = 1;
+        Employer employer = new Employer(idEmployer, "Employer Test");
+
+        when(employerRepository.save(employer)).thenReturn(employer);
+
+        Employer result = employerService.insert(employer);
+
+        verify(employerRepository).save(employer);
+        assertNotNull(result);
+        assertEquals(employer, result);
+        assertNotNull(result);
+
+    }
 }
