@@ -93,15 +93,20 @@ class EmployerServiceTest {
     void insertCase1() {
         Integer idEmployer = 1;
         Employer employer = new Employer(idEmployer, "Employer Test");
-
         when(employerRepository.save(employer)).thenReturn(employer);
-
         Employer result = employerService.insert(employer);
-
         verify(employerRepository).save(employer);
         assertNotNull(result);
         assertEquals(employer, result);
         assertNotNull(result);
 
+    }
+
+    @Test
+    void insertCase2() {
+        Employer employer = new Employer();
+        when(employerRepository.save(employer)).thenReturn(null);
+        doNothing().when(employerService.insert(employer));
+        verify(employerRepository.save(employer));
     }
 }
