@@ -11,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -109,4 +108,20 @@ class EmployerServiceTest {
         doNothing().when(employerService.insert(employer));
         verify(employerRepository.save(employer));
     }
+
+    @Test
+    void updateCase1() {
+        Integer idEmployer = 1;
+        Employer employerOld = new Employer(idEmployer, "Employer Test");
+        Employer employerUpdate = new Employer(idEmployer, "Employer Update");
+        when(employerRepository.findById(idEmployer)).thenReturn(Optional.of(employerOld));
+        when(employerRepository.save(employerOld)).thenReturn(employerOld);
+
+        Employer resul = employerService.update(idEmployer, employerUpdate);
+        verify(employerRepository).save(employerOld);
+        verify(employerRepository).findById(idEmployer);
+        assertEquals(resul.getName(), employerUpdate.getName());
+        assertEquals(resul.getId(), employerUpdate.getId());
+    }
+
 }
