@@ -124,4 +124,12 @@ class EmployerServiceTest {
         assertEquals(resul.getId(), employerUpdate.getId());
     }
 
+    @Test
+    void updateCase2() {
+        Integer idEmployer = 1;
+        when(employerRepository.findById(idEmployer)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> employerService.delete(idEmployer));
+        verify(employerRepository).findById(idEmployer);
+    }
+
 }
