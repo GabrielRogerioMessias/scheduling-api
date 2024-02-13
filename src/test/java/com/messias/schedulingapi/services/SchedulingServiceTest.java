@@ -72,7 +72,7 @@ class SchedulingServiceTest {
     }
 
     @Test
-    void update() {
+    void updateCase1() {
         Integer idScheduling = 1;
         Scheduling oldScheduling = new Scheduling(idScheduling, "2023-01-10", "2023-01-01T10:00:00", "2023-01-01T12:00:00");
         Scheduling updateScheduling = new Scheduling(idScheduling, "2023-01-20", "2023-01-01T12:00:00", "2023-01-01T13:30:00");
@@ -87,6 +87,14 @@ class SchedulingServiceTest {
         assertEquals(oldScheduling.getStartOfService(), result.getStartOfService());
         assertEquals(oldScheduling.getEndOfService(), result.getEndOfService());
         assertEquals(oldScheduling.getDateScheduling(), result.getDateScheduling());
+    }
+
+    @Test
+    void updateCase2() {
+        Integer idScheduling = 1;
+        when(schedulingRepository.findById(idScheduling)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> schedulingService.findById(idScheduling));
+        verify(schedulingRepository).findById(idScheduling);
     }
 
 }

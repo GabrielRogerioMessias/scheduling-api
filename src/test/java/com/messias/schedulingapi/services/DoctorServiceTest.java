@@ -105,7 +105,7 @@ class DoctorServiceTest {
     }
 
     @Test
-    void delete() {
+    void deleteCase1() {
         Integer idDoctor = 1;
         Doctor deleteDocotr = new Doctor(idDoctor, "Doctor Test", "0150156");
         when(doctorRepository.findById(idDoctor)).thenReturn(Optional.of(deleteDocotr));
