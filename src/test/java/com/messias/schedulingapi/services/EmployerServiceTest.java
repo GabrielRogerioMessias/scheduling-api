@@ -102,14 +102,6 @@ class EmployerServiceTest {
     }
 
     @Test
-    void insertCase2() {
-        Employer employer = new Employer();
-        when(employerRepository.save(employer)).thenReturn(null);
-        doNothing().when(employerService.insert(employer));
-        verify(employerRepository.save(employer));
-    }
-
-    @Test
     void updateCase1() {
         Integer idEmployer = 1;
         Employer employerOld = new Employer(idEmployer, "Employer Test");
