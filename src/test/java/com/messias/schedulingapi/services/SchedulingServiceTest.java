@@ -107,6 +107,25 @@ class SchedulingServiceTest {
         verify(schedulingRepository).delete(scheduling);
     }
 
-   
+    @Test
+    void deleteCase2() {
+        Integer idScheduling = 1;
+        when(schedulingRepository.findById(idScheduling)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> schedulingService.findById(idScheduling));
+        verify(schedulingRepository).findById(idScheduling);
+    }
+
+    @Test
+    void insert() {
+        Integer idScheduling = 1;
+        Scheduling newScheduling = new Scheduling(idScheduling, "2023-01-10", "2023-01-01T10:00:00", "2023-01-01T12:00:00");
+        when(schedulingRepository.save(newScheduling)).thenReturn(newScheduling);
+        Scheduling result = schedulingService.insert(newScheduling);
+        assertNotNull(result);
+        assertEquals(newScheduling.getDateScheduling(), result.getDateScheduling());
+        assertEquals(newScheduling.getEndOfService(), result.getEndOfService());
+        assertEquals(newScheduling.getStartOfService(), result.getStartOfService());
+        verify(schedulingRepository).save(newScheduling);
+    }
 
 }

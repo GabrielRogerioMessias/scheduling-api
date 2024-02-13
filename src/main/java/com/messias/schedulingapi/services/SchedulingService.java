@@ -44,22 +44,49 @@ public class SchedulingService {
     }
 
     public Scheduling insert(Scheduling newScheduling) {
-        Doctor doctor = doctorService.findById(newScheduling.getDoctor().getId());
-        Branch branch = branchService.findById(newScheduling.getBranch().getId());
-        User user = userService.findById(newScheduling.getUser().getId());
-        SchedulingInfo schedulingInfo = schedulingInfoService.findById(newScheduling.getSchedulingInfo().getId());
+        if (newScheduling == null) {
+            throw new IllegalArgumentException("newScheduling cannot be null");
+        }
 
-        schedulingInfo.getSchedulingList().add(newScheduling);
-        branch.getSchedulingList().add(newScheduling);
-        doctor.getSchedulingList().add(newScheduling);
-        user.getSchedulingList().add(newScheduling);
+        // Check for nullity for newScheduling.getDoctor()
+        if (newScheduling.getDoctor() != null) {
+            Doctor doctor = doctorService.findById(newScheduling.getDoctor().getId());
+            if (doctor != null) {
+                doctor.getSchedulingList().add(newScheduling);
+                newScheduling.setDoctor(doctor);
+            }
+        }
 
-        newScheduling.setSchedulingInfo(schedulingInfo);
-        newScheduling.setBranch(branch);
-        newScheduling.setDoctor(doctor);
-        newScheduling.setUser(user);
+        // Check for nullity for para newScheduling.getBranch()
+        if (newScheduling.getBranch() != null) {
+            Branch branch = branchService.findById(newScheduling.getBranch().getId());
+            if (branch != null) {
+                branch.getSchedulingList().add(newScheduling);
+                newScheduling.setBranch(branch);
+            }
+        }
+
+        // Check for nullity for newScheduling.getUser()
+        if (newScheduling.getUser() != null) {
+            User user = userService.findById(newScheduling.getUser().getId());
+            if (user != null) {
+                user.getSchedulingList().add(newScheduling);
+                newScheduling.setUser(user);
+            }
+        }
+
+        // Check for nullity for newScheduling.getSchedulingInfo()
+        if (newScheduling.getSchedulingInfo() != null) {
+            SchedulingInfo schedulingInfo = schedulingInfoService.findById(newScheduling.getSchedulingInfo().getId());
+            if (schedulingInfo != null) {
+                schedulingInfo.getSchedulingList().add(newScheduling);
+                newScheduling.setSchedulingInfo(schedulingInfo);
+            }
+        }
+
         return schedulingRepository.save(newScheduling);
     }
+
 
     public Scheduling update(Integer idScheduling, Scheduling updateScheduling) {
         Scheduling oldScheduling = schedulingRepository.findById(idScheduling).orElseThrow(() -> new ResourceNotFoundException(Scheduling.class, idScheduling));
@@ -123,3 +150,4 @@ public class SchedulingService {
 
 
 }
+
