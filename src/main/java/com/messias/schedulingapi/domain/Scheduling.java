@@ -48,6 +48,12 @@ public class Scheduling {
         this.startOfService = startOfService;
         this.endOfService = endOfService;
     }
+    public Scheduling(Integer id, String dateScheduling, String startOfService, String endOfService) {
+        this.id = id;
+        this.dateScheduling = LocalDate.parse(dateScheduling);
+        this.startOfService = LocalDateTime.parse(startOfService);
+        this.endOfService = LocalDateTime.parse(endOfService);
+    }
 
     public Integer getId() {
         return id;

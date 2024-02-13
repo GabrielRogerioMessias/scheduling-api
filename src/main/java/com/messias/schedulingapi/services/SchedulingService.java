@@ -69,13 +69,28 @@ public class SchedulingService {
 
 
     public void updateData(Scheduling oldScheduling, Scheduling updateScheduling) {
-        // Removing old relationships from the user, branch, and doctor entities.
-        oldScheduling.getDoctor().getSchedulingList().remove(oldScheduling);
-        oldScheduling.getUser().getSchedulingList().remove(oldScheduling);
-        oldScheduling.getBranch().getSchedulingList().remove(oldScheduling);
-        oldScheduling.getSchedulingInfo().getSchedulingList().remove(oldScheduling);
+        // Removing old relationships from the user, branch, doctor, and schedulingInfo entities.
+        Doctor oldDoctor = oldScheduling.getDoctor();
+        if (oldDoctor != null) {
+            oldDoctor.getSchedulingList().remove(oldScheduling);
+        }
 
-        //Updating entity data
+        User oldUser = oldScheduling.getUser();
+        if (oldUser != null) {
+            oldUser.getSchedulingList().remove(oldScheduling);
+        }
+
+        Branch oldBranch = oldScheduling.getBranch();
+        if (oldBranch != null) {
+            oldBranch.getSchedulingList().remove(oldScheduling);
+        }
+
+        SchedulingInfo oldSchedulingInfo = oldScheduling.getSchedulingInfo();
+        if (oldSchedulingInfo != null) {
+            oldSchedulingInfo.getSchedulingList().remove(oldScheduling);
+        }
+
+        // Updating entity data
         oldScheduling.setUser(updateScheduling.getUser());
         oldScheduling.setDoctor(updateScheduling.getDoctor());
         oldScheduling.setBranch(updateScheduling.getBranch());
@@ -84,12 +99,27 @@ public class SchedulingService {
         oldScheduling.setStartOfService(updateScheduling.getStartOfService());
         oldScheduling.setSchedulingInfo(updateScheduling.getSchedulingInfo());
 
-        //Adding the updated scheduling entity to the lists in the user, branch, and doctor entities.
-        updateScheduling.getUser().getSchedulingList().add(oldScheduling);
-        updateScheduling.getBranch().getSchedulingList().add(oldScheduling);
-        updateScheduling.getDoctor().getSchedulingList().add(oldScheduling);
-        updateScheduling.getSchedulingInfo().getSchedulingList().add(oldScheduling);
+        // Adding the updated scheduling entity to the lists in the user, branch, doctor, and schedulingInfo entities.
+        User newUser = updateScheduling.getUser();
+        if (newUser != null) {
+            newUser.getSchedulingList().add(oldScheduling);
+        }
 
+        Branch newBranch = updateScheduling.getBranch();
+        if (newBranch != null) {
+            newBranch.getSchedulingList().add(oldScheduling);
+        }
+
+        Doctor newDoctor = updateScheduling.getDoctor();
+        if (newDoctor != null) {
+            newDoctor.getSchedulingList().add(oldScheduling);
+        }
+
+        SchedulingInfo newSchedulingInfo = updateScheduling.getSchedulingInfo();
+        if (newSchedulingInfo != null) {
+            newSchedulingInfo.getSchedulingList().add(oldScheduling);
+        }
     }
+
 
 }

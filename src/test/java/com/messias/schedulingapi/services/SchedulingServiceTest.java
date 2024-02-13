@@ -71,4 +71,22 @@ class SchedulingServiceTest {
         verify(schedulingRepository).findById(idScheduling);
     }
 
+    @Test
+    void update() {
+        Integer idScheduling = 1;
+        Scheduling oldScheduling = new Scheduling(idScheduling, "2023-01-10", "2023-01-01T10:00:00", "2023-01-01T12:00:00");
+        Scheduling updateScheduling = new Scheduling(idScheduling, "2023-01-20", "2023-01-01T12:00:00", "2023-01-01T13:30:00");
+        when(schedulingRepository.findById(idScheduling)).thenReturn(Optional.of(oldScheduling));
+        when(schedulingRepository.save(oldScheduling)).thenReturn(oldScheduling);
+
+        Scheduling result = schedulingService.update(idScheduling, updateScheduling);
+
+        verify(schedulingRepository).findById(idScheduling);
+        verify(schedulingRepository).save(oldScheduling);
+        assertNotNull(result);
+        assertEquals(oldScheduling.getStartOfService(), result.getStartOfService());
+        assertEquals(oldScheduling.getEndOfService(), result.getEndOfService());
+        assertEquals(oldScheduling.getDateScheduling(), result.getDateScheduling());
+    }
+
 }
