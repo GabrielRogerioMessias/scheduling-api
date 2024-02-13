@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SchedulingServiceTest {
     @InjectMocks
@@ -96,5 +95,18 @@ class SchedulingServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> schedulingService.findById(idScheduling));
         verify(schedulingRepository).findById(idScheduling);
     }
+
+    @Test
+    void deleteCase1() {
+        Integer idScheduling = 1;
+        Scheduling scheduling = new Scheduling(idScheduling, "2023-01-10", "2023-01-01T10:00:00", "2023-01-01T12:00:00");
+        when(schedulingRepository.findById(idScheduling)).thenReturn(Optional.of(scheduling));
+        doNothing().when(schedulingRepository).delete(scheduling);
+        assertDoesNotThrow(() -> schedulingService.delete(idScheduling));
+        verify(schedulingRepository).findById(idScheduling);
+        verify(schedulingRepository).delete(scheduling);
+    }
+
+   
 
 }
