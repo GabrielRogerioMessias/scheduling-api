@@ -129,6 +129,17 @@ class PermissionServiceTest {
 
     @Test
     void insert() {
+        Integer idPermission = 1;
+        Permission permission = new Permission(idPermission, "TEST");
+
+        when(permissionRepository.save(permission)).thenReturn(permission);
+
+        Permission result = permissionService.insert(permission);
+        assertAll(
+                () -> assertNotNull(result),
+                () -> verify(permissionRepository).save(permission),
+                () -> assertEquals(permission, result)
+        );
     }
 
     @Test
