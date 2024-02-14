@@ -2,6 +2,7 @@ package com.messias.schedulingapi.services;
 
 import com.messias.schedulingapi.domain.Permission;
 import com.messias.schedulingapi.repositories.PermissionRepository;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -50,7 +52,27 @@ class PermissionServiceTest {
     }
 
     @Test
-    void findByDescription() {
+    void findByDescriptionCase1() {
+        String param = "TEST";
+        Permission permission = new Permission(1, "TEST");
+        when(permissionRepository.findPermissionByDescription(param)).thenReturn(Optional.of(permission));
+        Permission result = permissionService.findByDescription(param);
+        assertAll(
+                () -> assertEquals(permission, result),
+                () -> assertEquals(permission.getDescription(), result.getDescription()),
+                () -> verify(permissionRepository).findPermissionByDescription(param)
+        );
+    }
+
+    @Test
+    void findByDescriptionCase2() {
+        String description = "";
+        when(permissionRepository.findPermissionByDescription(description)).thenReturn(Optional.empty());
+
+        assertAll(
+                () -> assertThrows(ResourceNotFoundException.class, () -> permissionService.findByDescription(description)),
+                () -> verify(permissionRepository).findPermissionByDescription(description)
+        );
     }
 
     @Test
