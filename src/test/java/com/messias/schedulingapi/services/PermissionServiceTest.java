@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.parameters.P;
+import org.yaml.snakeyaml.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ class PermissionServiceTest {
     }
 
     @Test
-    void findById() {
+    void findByIdCase1() {
         Integer idPermission = 1;
         Permission permission = new Permission(idPermission, "TEST");
         when(permissionRepository.findById(idPermission)).thenReturn(Optional.of(permission));
@@ -90,6 +91,17 @@ class PermissionServiceTest {
                 () -> verify(permissionRepository).findById(idPermission)
         );
     }
+
+    @Test
+    void findByIdCase2() {
+        Integer idPermission = 1;
+        when(permissionRepository.findById(idPermission)).thenReturn(Optional.empty());
+        assertAll(
+                () -> assertThrows(ResourceNotFoundException.class, () -> permissionService.findById(idPermission)),
+                () -> verify(permissionRepository).findById(idPermission)
+        );
+    }
+
 
     @Test
     void delete() {
