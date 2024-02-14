@@ -88,7 +88,7 @@ class BranchServiceTest {
     void delete() {
         Integer idBranch = 1;
         Branch deleteBranch = new Branch(idBranch, "Branch1", "City");
-        when(branchRepository.findById(idBranch)).thenReturn(java.util.Optional.of(deleteBranch));
+        when(branchRepository.findById(idBranch)).thenReturn(Optional.of(deleteBranch));
         doNothing().when(branchRepository).delete(deleteBranch);
         assertDoesNotThrow(() -> branchService.delete(idBranch));
         verify(branchRepository).findById(idBranch);

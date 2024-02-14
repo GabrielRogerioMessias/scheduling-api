@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PermissionServiceTest {
     @InjectMocks
@@ -102,9 +101,30 @@ class PermissionServiceTest {
         );
     }
 
+    @Test
+    void deleteCase1() {
+        Integer idPermission = 1;
+        Permission permission = new Permission(idPermission, "TEST");
+        when(permissionRepository.findById(idPermission)).thenReturn(Optional.of(permission));
+        doNothing().when(permissionRepository).delete(permission);
+
+        assertAll(
+                () -> assertDoesNotThrow(() -> permissionService.delete(idPermission)),
+                () -> verify(permissionRepository).findById(idPermission),
+                () -> verify(permissionRepository).delete(permission)
+        );
+
+    }
 
     @Test
-    void delete() {
+    void deleteCase2() {
+        Integer idPermission = 1;
+        when(permissionRepository.findById(idPermission)).thenReturn(Optional.empty());
+        assertAll(
+                () -> assertThrows(ResourceNotFoundException.class, () -> permissionService.findById(idPermission)),
+                () -> verify(permissionRepository).findById(idPermission),
+                () -> verify(permissionRepository, never()).delete(any())
+        );
     }
 
     @Test
