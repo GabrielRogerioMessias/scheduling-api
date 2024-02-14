@@ -143,10 +143,25 @@ class PermissionServiceTest {
     }
 
     @Test
-    void update() {
+    void updateCase1() {
+        Integer idPermission = 1;
+        Permission oldPermission = new Permission(idPermission, "TEST");
+        Permission updatePermission = new Permission(idPermission, "UPDATE TEST");
+        when(permissionRepository.findById(idPermission)).thenReturn(Optional.of(oldPermission));
+        when(permissionRepository.save(oldPermission)).thenReturn(oldPermission);
+
+        Permission result = permissionService.update(idPermission, updatePermission);
+
+        assertAll(
+                () -> assertNotNull(result),
+                () -> assertEquals(oldPermission, updatePermission),
+                () -> assertEquals(oldPermission.getDescription(), updatePermission.getDescription()),
+                () -> verify(permissionRepository).findById(idPermission),
+                () -> verify(permissionRepository).save(oldPermission)
+        );
     }
 
-    @Test
-    void updateData() {
-    }
+    
+
+
 }
