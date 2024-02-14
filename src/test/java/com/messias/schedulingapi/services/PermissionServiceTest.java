@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.parameters.P;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,17 @@ class PermissionServiceTest {
 
     @Test
     void findById() {
+        Integer idPermission = 1;
+        Permission permission = new Permission(idPermission, "TEST");
+        when(permissionRepository.findById(idPermission)).thenReturn(Optional.of(permission));
+
+        Permission result = permissionService.findById(idPermission);
+
+        assertAll(
+                () -> assertEquals(permission, result),
+                () -> assertEquals(permission.getDescription(), result.getDescription()),
+                () -> verify(permissionRepository).findById(idPermission)
+        );
     }
 
     @Test
