@@ -161,7 +161,18 @@ class PermissionServiceTest {
         );
     }
 
-    
+    @Test
+    void updateCase2() {
+        Integer idPermission = 1;
+        Permission updatePermission = new Permission(idPermission, "UPDATE TEST");
+        when(permissionRepository.findById(idPermission)).thenReturn(Optional.empty());
+
+        assertAll(
+                () -> assertThrows(ResourceNotFoundException.class, () -> permissionService.update(idPermission, updatePermission)),
+                () -> verify(permissionRepository).findById(idPermission),
+                () -> verify(permissionRepository, never()).save(any())
+        );
+    }
 
 
 }
