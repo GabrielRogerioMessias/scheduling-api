@@ -2,6 +2,7 @@ package com.messias.schedulingapi.services;
 
 import com.messias.schedulingapi.domain.TypeScheduling;
 import com.messias.schedulingapi.repositories.TypeSchedulingRepository;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -50,9 +51,19 @@ class TypeSchedulingServiceTest {
         when(typeSchedulingRepository.findById(idTyperScheduling)).thenReturn(Optional.of(typeScheduling));
         TypeScheduling result = typeSchedulingService.findById(idTyperScheduling);
         assertAll(
-                ()-> verify(typeSchedulingRepository, times(1)).findById(idTyperScheduling),
-                ()-> assertEquals(typeScheduling, result)
+                () -> verify(typeSchedulingRepository, times(1)).findById(idTyperScheduling),
+                () -> assertEquals(typeScheduling, result)
         );
     }
-    
+
+    @Test
+    void findByIdCase2() {
+        Integer idTypeSchedulign = 1;
+        when(typeSchedulingRepository.findById(idTypeSchedulign)).thenReturn(Optional.empty());
+        assertAll(
+                () -> assertThrows(ResourceNotFoundException.class, () -> typeSchedulingService.findById(idTypeSchedulign)),
+                () -> verify(typeSchedulingRepository, times(1)).findById(idTypeSchedulign)
+        );
+    }
+
 }
