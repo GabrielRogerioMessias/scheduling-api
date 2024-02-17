@@ -4,12 +4,12 @@ import com.messias.schedulingapi.domain.TypeScheduling;
 import com.messias.schedulingapi.repositories.TypeSchedulingRepository;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,9 @@ class TypeSchedulingServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
+
     @Test
+    @DisplayName("Test the findAll method when there are scheduling types in the list")
     void findAll() {
         List<TypeScheduling> typeSchedulingList = Arrays.asList(
                 new TypeScheduling(1, "ADM"),
@@ -45,6 +47,7 @@ class TypeSchedulingServiceTest {
     }
 
     @Test
+    @DisplayName("Test findById when there is TypeScheduling with the given id")
     void findByIdCase1() {
         Integer idTyperScheduling = 1;
         TypeScheduling typeScheduling = new TypeScheduling();
@@ -57,6 +60,7 @@ class TypeSchedulingServiceTest {
     }
 
     @Test
+    @DisplayName("Test findById when there is no TypeScheduling with the given id")
     void findByIdCase2() {
         Integer idTypeSchedulign = 1;
         when(typeSchedulingRepository.findById(idTypeSchedulign)).thenReturn(Optional.empty());
