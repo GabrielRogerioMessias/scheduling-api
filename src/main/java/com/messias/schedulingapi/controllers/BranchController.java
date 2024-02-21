@@ -47,7 +47,7 @@ public class BranchController {
 
     @PutMapping("{idBranch}")
     public ResponseEntity<Branch> update(@PathVariable Integer idBranch, @RequestBody Branch updateBranch) {
-        branchService.update(idBranch, updateBranch);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        Branch branch = branchService.update(idBranch, updateBranch);
+        return ResponseEntity.ok().body(branch);
     }
 }

@@ -23,8 +23,7 @@ public class BranchService {
     }
 
     public Branch findById(Integer idBranch) {
-        Branch branch = branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(Branch.class, idBranch));
-        return branch;
+        return branchRepository.findById(idBranch).orElseThrow(() -> new ResourceNotFoundException(Branch.class, idBranch));
     }
 
     public void delete(Integer idBranch) {
