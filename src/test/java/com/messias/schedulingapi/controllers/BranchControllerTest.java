@@ -7,6 +7,7 @@ import com.messias.schedulingapi.domain.Branch;
 import com.messias.schedulingapi.repositories.BranchRepository;
 import com.messias.schedulingapi.services.BranchService;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,13 +28,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.matches;
+import static org.mockito.ArgumentMatchers.assertArg;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(controllers = BranchController.class)
@@ -114,20 +112,27 @@ class BranchControllerTest {
         response.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
+
     @Test
     void updateCase1() throws Exception {
-        Integer idBranch = 1;
-        Branch oldBranch = new Branch(idBranch, "TEST", "TEST");
+        Integer idBranch =  1;
         Branch updateBranch = new Branch(idBranch, "BRANCH UPDATE", "UPDATE");
-        given(branchService.findById(idBranch)).willReturn(oldBranch);
         given(branchService.update(idBranch, updateBranch)).willReturn(updateBranch);
 
         ResultActions response = mockMvc.perform(put("/branchs/{idBranch}", idBranch)
-                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(oldBranch)));
+                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(updateBranch)));
 
         response.andExpect(MockMvcResultMatchers.status().isOk());
         response.andExpect(MockMvcResultMatchers.jsonPath("$.nameBranch").value("BRANCH UPDATE"));
+        response.andExpect(MockMvcResultMatchers.jsonPath("$.city").value("UPDATE"));
+    }
+
+    @Test
+    void delete() {
+        Integer idBranch = 1;
+        given(branchService.findById(idBranch)).willReturn(branch);
 
     }
+
 
 }
