@@ -32,6 +32,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.assertArg;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(controllers = BranchController.class)
@@ -115,7 +116,7 @@ class BranchControllerTest {
 
     @Test
     void updateCase1() throws Exception {
-        Integer idBranch =  1;
+        Integer idBranch = 1;
         Branch updateBranch = new Branch(idBranch, "BRANCH UPDATE", "UPDATE");
         given(branchService.update(idBranch, updateBranch)).willReturn(updateBranch);
 
@@ -128,10 +129,14 @@ class BranchControllerTest {
     }
 
     @Test
-    void delete() {
+    @DisplayName("when delete branch return is no content")
+    void deleteCase() throws Exception {
         Integer idBranch = 1;
-        given(branchService.findById(idBranch)).willReturn(branch);
+        doNothing().when(branchService).delete(idBranch);
+        ResultActions response = mockMvc.perform(delete("/branchs/{idBranch}", idBranch)
+                .contentType(MediaType.APPLICATION_JSON));
 
+       response.andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
 
