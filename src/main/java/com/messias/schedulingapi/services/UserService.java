@@ -45,7 +45,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User findById(Integer idUser) {
-        return userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException(User.class, idUser));
+        return userRepository.findById(idUser)
+                .orElseThrow(() -> new ResourceNotFoundException(User.class, idUser));
     }
 
     public void delete(Integer idUser) {

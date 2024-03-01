@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -40,5 +41,17 @@ class UserServiceTest {
         assertEquals(userList, result);
         verify(userRepository).findAll();
     }
+    @Test
+    @DisplayName("when find by id return a user")
+    void findByIdCase1(){
+        Integer idUser = 1;
+        User user = new User();
+        when(userRepository.findById(idUser)).thenReturn(Optional.of(user));
 
+        User result = userService.findById(idUser);
+
+        verify(userRepository).findById(idUser);
+        assertEquals(user, result);
+    }
+    
 }
