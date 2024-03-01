@@ -3,6 +3,7 @@ package com.messias.schedulingapi.services;
 import com.messias.schedulingapi.domain.User;
 import com.messias.schedulingapi.repositories.PermissionRepository;
 import com.messias.schedulingapi.repositories.UserRepository;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class UserServiceTest {
@@ -42,7 +42,7 @@ class UserServiceTest {
         verify(userRepository).findAll();
     }
     @Test
-    @DisplayName("when find by id return a user")
+    @DisplayName("when findById return a user")
     void findByIdCase1(){
         Integer idUser = 1;
         User user = new User();
@@ -53,5 +53,13 @@ class UserServiceTest {
         verify(userRepository).findById(idUser);
         assertEquals(user, result);
     }
-    
+
+    @Test
+    @DisplayName("when findById does not return a user, and throws an exception")
+    void findByIdCase2(){
+        Integer idUser = 1;
+        when(userRepository.findById(idUser)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, ()-> userService.findById(idUser));
+        verify(userRepository).findById(idUser);
+    }
 }
