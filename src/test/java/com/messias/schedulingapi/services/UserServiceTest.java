@@ -62,4 +62,20 @@ class UserServiceTest {
         assertThrows(ResourceNotFoundException.class, ()-> userService.findById(idUser));
         verify(userRepository).findById(idUser);
     }
+    @Test
+    @DisplayName("When data of user is updated")
+    void updateCase1(){
+        Integer idUser = 1;
+        User oldUser = new User();
+        oldUser.setFullName("TEST");
+        User updateUser = new User();
+        updateUser.setFullName("TEST UPDATE");
+        when(userRepository.findById(idUser)).thenReturn(Optional.of(oldUser));
+        when(userRepository.save(oldUser)).thenReturn(oldUser);
+
+        User result = userService.update(idUser, updateUser);
+        verify(userRepository).findById(idUser);
+        verify(userRepository).save(oldUser);
+        assertEquals(updateUser.getFullName(), result.getFullName());
+    }
 }
