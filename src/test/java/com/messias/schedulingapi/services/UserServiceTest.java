@@ -91,8 +91,25 @@ class UserServiceTest {
         userDTO.setUsername("test");
         when(userRepository.findByUsername(userDTO.getUsername())).thenReturn(new User());
 
-       assertThrows(ResourceAlreadyRegisteredException.class, ()-> userService.insert(userDTO));
-       verify(userRepository).findByUsername(userDTO.getUsername());
+        assertThrows(ResourceAlreadyRegisteredException.class, () -> userService.insert(userDTO));
+        verify(userRepository).findByUsername(userDTO.getUsername());
     }
 
+    @Test
+    @DisplayName("When the user is successfully entered")
+    void insert() {
+        Integer idUser = 1;
+        User newUser = new User();
+        UserDTO newUserDTO =  new UserDTO();
+        newUserDTO.setPassword("TEST");
+        newUserDTO.setUsername("TestUser");
+        when(userRepository.findByUsername(newUserDTO.getUsername())).thenReturn(null);
+        when(userRepository.save(newUser)).thenReturn(newUser);
+
+        User result = userService.insert(newUserDTO);
+
+        assertEquals(newUser, result);
+        verify(userRepository).save(newUser);
+        verify(userRepository).findByUsername(newUserDTO.getUsername());
+    }
 }
