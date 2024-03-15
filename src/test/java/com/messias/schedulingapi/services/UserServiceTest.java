@@ -97,10 +97,10 @@ class UserServiceTest {
 
     @Test
     @DisplayName("When the user is successfully entered")
-    void insert() {
+    void insertCase2() {
         Integer idUser = 1;
         User newUser = new User();
-        UserDTO newUserDTO =  new UserDTO();
+        UserDTO newUserDTO = new UserDTO();
         newUserDTO.setPassword("TEST");
         newUserDTO.setUsername("TestUser");
         when(userRepository.findByUsername(newUserDTO.getUsername())).thenReturn(null);
@@ -111,5 +111,15 @@ class UserServiceTest {
         assertEquals(newUser, result);
         verify(userRepository).save(newUser);
         verify(userRepository).findByUsername(newUserDTO.getUsername());
+    }
+
+    @Test
+    @DisplayName("When the method delete returns a exception")
+    void deleteCase1() {
+        Integer idUser = 1;
+        when(userRepository.findById(idUser)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> userService.delete(idUser));
+        verify(userRepository).findById(idUser);
     }
 }
