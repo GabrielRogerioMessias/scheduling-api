@@ -1,9 +1,12 @@
 package com.messias.schedulingapi.services;
 
+import com.messias.schedulingapi.domain.Scheduling;
+import com.messias.schedulingapi.domain.SchedulingEmployer;
 import com.messias.schedulingapi.domain.User;
 import com.messias.schedulingapi.domain.dtos.UserDTO;
 import com.messias.schedulingapi.repositories.PermissionRepository;
 import com.messias.schedulingapi.repositories.UserRepository;
+import com.messias.schedulingapi.services.exceptionsServices.DatabaseException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceAlreadyRegisteredException;
 import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import javax.print.DocFlavor;
 import java.util.Arrays;
@@ -122,9 +126,10 @@ class UserServiceTest {
         verify(userRepository, never()).delete(any());
         verify(userRepository).findById(idUser);
     }
+
     @Test
     @DisplayName("When the method delete successful")
-    void deleteCase2(){
+    void deleteCase2() {
         Integer idUser = 1;
         User deleteUser = new User();
         when(userRepository.findById(idUser)).thenReturn(Optional.of(deleteUser));
@@ -132,5 +137,19 @@ class UserServiceTest {
         doNothing().when(userRepository).delete(deleteUser);
         verify(userRepository).findById(idUser);
         verify(userRepository).delete(deleteUser);
+    }
+
+    @Test
+    @DisplayName("When the delete method throws a database exception")
+    void deleteCase3() {
+        Integer idUser = 1;
+        User deleteUser = new User();
+
+        when(userRepository.findById(idUser)).thenReturn(Optional.of(deleteUser));
+        doThrow(DatabaseException.class).when(userRepository).delete(deleteUser);
+
+        assertThrows(DatabaseException.class, ()-> userService.delete(idUser));
+        verify(userRepository).findById(idUser);
+//        verify(userRepository, never()).delete(deleteUser);
     }
 }
