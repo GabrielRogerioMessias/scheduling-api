@@ -118,8 +118,19 @@ class UserServiceTest {
     void deleteCase1() {
         Integer idUser = 1;
         when(userRepository.findById(idUser)).thenReturn(Optional.empty());
-
         assertThrows(ResourceNotFoundException.class, () -> userService.delete(idUser));
+        verify(userRepository, never()).delete(any());
         verify(userRepository).findById(idUser);
+    }
+    @Test
+    @DisplayName("When the method delete successful")
+    void deleteCase2(){
+        Integer idUser = 1;
+        User deleteUser = new User();
+        when(userRepository.findById(idUser)).thenReturn(Optional.of(deleteUser));
+        userService.delete(idUser);
+        doNothing().when(userRepository).delete(deleteUser);
+        verify(userRepository).findById(idUser);
+        verify(userRepository).delete(deleteUser);
     }
 }
