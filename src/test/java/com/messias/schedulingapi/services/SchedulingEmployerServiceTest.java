@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -26,7 +27,7 @@ class SchedulingEmployerServiceTest {
     SchedulingEmployerRepository schedulingEmployerRepository;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
@@ -39,4 +40,17 @@ class SchedulingEmployerServiceTest {
         verify(schedulingEmployerRepository).findAll();
         assertEquals(schedulingEmployerList, result);
     }
+
+    @Test
+    @DisplayName("When findById method return a SchedulingEmployer")
+    void findByIdCase1() {
+        Integer idSchedulingEmployer = 1;
+        SchedulingEmployer schedulingEmployer = new SchedulingEmployer();
+        schedulingEmployer.setId(idSchedulingEmployer);
+        when(schedulingEmployerRepository.findById(idSchedulingEmployer)).thenReturn(Optional.of(schedulingEmployer));
+        SchedulingEmployer result = schedulingEmployerService.findById(idSchedulingEmployer);
+        assertEquals(schedulingEmployer.getId(), result.getId());
+        verify(schedulingEmployerRepository).findById(idSchedulingEmployer);
+    }
+
 }
