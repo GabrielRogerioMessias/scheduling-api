@@ -150,6 +150,5 @@ class UserServiceTest {
 
         assertThrows(DatabaseException.class, ()-> userService.delete(idUser));
         verify(userRepository).findById(idUser);
-//        verify(userRepository, never()).delete(deleteUser);
     }
 }

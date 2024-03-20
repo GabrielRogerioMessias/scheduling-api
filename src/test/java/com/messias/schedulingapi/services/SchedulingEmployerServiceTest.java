@@ -1,0 +1,42 @@
+package com.messias.schedulingapi.services;
+
+import com.messias.schedulingapi.domain.Scheduling;
+import com.messias.schedulingapi.domain.SchedulingEmployer;
+import com.messias.schedulingapi.repositories.SchedulingEmployerRepository;
+import com.messias.schedulingapi.repositories.SchedulingRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+class SchedulingEmployerServiceTest {
+    @InjectMocks
+    SchedulingEmployerService schedulingEmployerService;
+    @Mock
+    SchedulingEmployerRepository schedulingEmployerRepository;
+
+    @BeforeEach
+    void setUp(){
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    @DisplayName("When findAll method return a list")
+    void findAll() {
+        List<SchedulingEmployer> schedulingEmployerList = Arrays.asList();
+        when(schedulingEmployerRepository.findAll()).thenReturn(schedulingEmployerList);
+        List<SchedulingEmployer> result = schedulingEmployerService.findAll();
+        verify(schedulingEmployerRepository).findAll();
+        assertEquals(schedulingEmployerList, result);
+    }
+}
