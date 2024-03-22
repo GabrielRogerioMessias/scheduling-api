@@ -4,6 +4,7 @@ import com.messias.schedulingapi.domain.Scheduling;
 import com.messias.schedulingapi.domain.SchedulingEmployer;
 import com.messias.schedulingapi.repositories.SchedulingEmployerRepository;
 import com.messias.schedulingapi.repositories.SchedulingRepository;
+import com.messias.schedulingapi.services.exceptionsServices.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SchedulingEmployerServiceTest {
     @InjectMocks
@@ -50,6 +50,14 @@ class SchedulingEmployerServiceTest {
         when(schedulingEmployerRepository.findById(idSchedulingEmployer)).thenReturn(Optional.of(schedulingEmployer));
         SchedulingEmployer result = schedulingEmployerService.findById(idSchedulingEmployer);
         assertEquals(schedulingEmployer.getId(), result.getId());
+        verify(schedulingEmployerRepository).findById(idSchedulingEmployer);
+    }
+    @Test
+    @DisplayName("When findById method return a Exception")
+    void findByIdCase2(){
+        Integer idSchedulingEmployer = 1;
+        when(schedulingEmployerRepository.findById(idSchedulingEmployer)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, ()-> schedulingEmployerService.findById(idSchedulingEmployer));
         verify(schedulingEmployerRepository).findById(idSchedulingEmployer);
     }
 
